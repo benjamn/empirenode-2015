@@ -63,9 +63,108 @@
         </section>
 
         <section>
+          <h2>
+            How do<br>
+            languages<br>
+            change?
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            How do<br>
+            natural languages<br>
+            change?
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            How do<br>
+            programming languages<br>
+            change?
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            How can<br>
+            JavaScript<br>
+            change?
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            &ldquo;The Web is a brutal,<br>
+            shortest-path, Worse-is-Better
+            evolving system.&rdquo;
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            JavaScript is finally<br>
+            becoming the language<br>
+            we want.
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            Many new features can<br>
+            be <em>simulated</em> without any<br>
+            changes to the language.
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            But not everything!
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            Today I want to talk about a powerful JavaScript feature that
+            we use at Meteor that cannot be reasonably simulated.
+          </h2>
+        </section>
+
+        <section>
+          <h1>
+            Coroutines<span class="fragment"> (Fibers)</span>
+          </h1>
+        </section>
+
+        <section>
+          <h2>
+            Many other languages<br>
+            support coroutines!
+          </h2>
+          <br>
+          <p class="fragment">
+            Aikido, AngelScript, BCPL, Pascal, BETA, BLISS, C#, ChucK, D,
+            Dynamic C, Erlang, F#, Factor, GameMonkey Script, Go, Haskell,
+            High Level Assembly, Icon, Io, Julia, Limbo, Lua, Lucid, µC++,
+            MiniD, Modula-2, Nemerle, Perl, PHP, Picolisp, Prolog, Python,
+            Ruby, Rust, Sather, Scheme, Self, Simula 67, Squirrel,
+            Stackless Python, SuperCollider, Tcl, urbiscript
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Why not JavaScript?
+          </h2>
+        </section>
+
+        <section>
           <pre class="small"><code class="javascript">
 async function fetch(url) {
+  console.log(url);
   var body = await request(url);
+  return body;
 }</code></pre>
         </section>
       </div>
