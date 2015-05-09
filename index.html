@@ -261,7 +261,7 @@ function sleep(ms) {
         <section>
           <h2>
             If we can agree that making asynchronous programming easier is
-            important to the future of JavaScript,<span class="fragment">
+            important for the future of JavaScript,<span class="fragment">
             and TC39 is not interested in
             coroutines,<span class="fragment"> then what other remedy do
             they have in mind?</span></span>
@@ -1072,6 +1072,19 @@ function async(fn) {
 }</code>
             </div>
           </section>
+        </section>
+
+        <section>
+          <h2>
+            Once we have these two functions in our
+            toolchain,<span class="fragment"> we can forget they were
+            implemented
+            using <code class="javascript">Fiber</code>s,<span class="fragment">
+            just as I forgot to mention that <a target="_blank"
+            href="https://github.com/laverdet/node-fibers"><code>node-fibers</code></a>
+            is implemented on top of <a target="_blank"
+            href="http://software.schmorp.de/pkg/libcoro.html"><code>libcoro</code></a>.</span></span>
+          </h2>
         </section>
 
         <section>

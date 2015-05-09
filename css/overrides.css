@@ -32,8 +32,9 @@
 }
 
 .reveal code.left {
-  width: 50%;
+  width: 55%;
   float: left;
+  overflow: visible;
 }
 
 .reveal code.right {
