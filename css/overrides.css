@@ -1,0 +1,165 @@
+.hidden {
+  visibility: hidden;
+}
+
+.branding {
+  position: fixed;
+  left: 25px;
+  bottom: 25px;
+}
+
+.reveal h1,
+.reveal h2,
+.reveal h3 {
+  text-transform: none;
+}
+
+.reveal section img#yield_ahead,
+.reveal pre {
+  box-shadow: none;
+  border: none;
+  outline: none;
+}
+
+.reveal pre.contact {
+  font-size: 32px;
+  display: inline-block;
+  margin: 0 auto;
+  width: auto;
+}
+
+body > .CodeMirror {
+  visibility: hidden;
+}
+
+.CodeMirror {
+  font-family: monospace !important;
+  line-height: 1.2em !important;
+}
+
+section#tilde-trick-traverse .CodeMirror,
+section#rest-param-traverse .CodeMirror,
+section#arrow-fn-traverse .CodeMirror,
+section#generator-codegen .CodeMirror,
+section#for-stmt-codegen .CodeMirror,
+section#loc-and-mark .CodeMirror,
+section#jump-if-not .CodeMirror,
+section#explode-statement .CodeMirror,
+section#exception-handling .CodeMirror,
+section#async-codegen .CodeMirror {
+  display: block;
+  position: relative;
+  margin: 0;
+  left: 200px;
+}
+section#loc-and-mark .CodeMirror {
+  left: 120px;
+}
+
+.CodeMirror.big {
+  font-size: 32px;
+}
+
+.CodeMirror.small {
+  font-size: 20px;
+}
+
+section.full_height,
+section.external_iframe {
+  height: 100%;
+}
+
+.links {
+  text-align: left;
+  padding-left: 150px !important;
+}
+
+.external_iframe iframe {
+  width: 100%;
+  height: 90%;
+  margin: 50px 0 0 0;
+}
+
+.reveal section table {
+  width: 100%;
+}
+
+.reveal section table.top td {
+  vertical-align: text-top;
+}
+
+img.interstitial {
+  zoom: 1 !important;
+}
+
+.reveal section img#yield_ahead,
+.reveal section img#wires,
+.reveal section .thanks {
+  position: relative;
+  top: -25px;
+}
+
+.reveal section img#yield_ahead {
+  max-height: 700px;
+}
+
+.reveal section .thanks h2 {
+  color: white;
+  position: absolute;
+  left: 700px;
+  top: 250px;
+}
+
+.reveal section .thanks img {
+  z-index: -1;
+}
+
+.CodeMirror {
+  background: none;
+  height: auto;
+  display: inline-block;
+  margin: 20px auto;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+  font-family: monospace;
+}
+
+.reveal section .CodeMirror-scroll {
+  padding: 1em;
+  margin: -1em;
+}
+
+.reveal section.tweet {
+  text-align: center;
+}
+
+.reveal section.tweet iframe {
+  margin: 10px auto !important;
+}
+
+.reveal section.two-up .left {
+  float: left;
+  padding-left: 0;
+}
+
+.reveal section.two-up .right {
+  position: absolute;
+  left: 55%;
+}
+
+.reveal section.two-up .iterObj-left {
+  position: relative;
+  float: left;
+  left: 100px;
+}
+
+.reveal section.two-up .iterObj-right {
+  position: relative;
+  float: left;
+  left: 150px;
+}
+
+.reveal section h2 {
+  line-height: 1.2em !important;
+}
