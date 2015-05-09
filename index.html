@@ -1318,7 +1318,41 @@ let [ben, marley] = await Promise.all([
 
         <section>
           <h2>
-            Catch #1:<span class="fragment"> Fibers are server-only</span>
+            Catch #1:<span class="fragment">
+              <code class="javascript">Fiber</code>s
+              probably won't work in the browser</span>
+          </h2>
+          <p class="fragment">
+            For a framework that strives to be isomorphic, this
+            inconsistency is unfortunate.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Catch #2:<span class="fragment">
+              Mutating shared global state is tricky
+              with <code class="javascript">Fiber</code>s
+            </span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            Catch #3:<span class="fragment">
+              Native third-party modules sometimes don't work well
+              with <code class="javascript">Fiber</code>s
+            </span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            Catch #4:<span class="fragment">
+              Meteor has to ship a specific
+              binary version of Node to guarantee support
+              for <code class="javascript">Fiber</code>s
+            </span>
           </h2>
         </section>
       </div>
