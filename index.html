@@ -522,7 +522,7 @@ async function getOrCreateUser(name) {
             </h2>
             <div class="align-left">
               <code class="javascript small block">
-let createUser = async(function createUser(name) {
+let createUser = async(function (name) {
   let response = await users.insert({ name: name });
   return await users.findOne(response._id);
 });
@@ -546,7 +546,7 @@ async function getOrCreateUser(name) {
             </h2>
             <div class="align-left">
               <code class="javascript small block">
-let createUser = async(function createUser(name) {
+let createUser = async(function (name) {
   let response = await(users.insert({ name: name }));
   return await users.findOne(response._id);
 });
@@ -570,7 +570,7 @@ async function getOrCreateUser(name) {
             </h2>
             <div class="align-left">
               <code class="javascript small block">
-let createUser = async(function createUser(name) {
+let createUser = async(function (name) {
   let response = await(users.insert({ name: name }));
   return await(users.findOne(response._id));
 });
@@ -594,12 +594,12 @@ async function getOrCreateUser(name) {
             </h2>
             <div class="align-left">
               <code class="javascript small block">
-let createUser = async(function createUser(name) {
+let createUser = async(function (name) {
   let response = await(users.insert({ name: name }));
   return await(users.findOne(response._id));
 });
 
-let getOrCreateUser = async(function getOrCreateUser(name) {
+let getOrCreateUser = async(function (name) {
   let user = await users.findOne({ name: name });
   return user || await createUser(name);
 });</code>
@@ -618,12 +618,12 @@ let getOrCreateUser = async(function getOrCreateUser(name) {
             </h2>
             <div class="align-left">
               <code class="javascript small block">
-let createUser = async(function createUser(name) {
+let createUser = async(function (name) {
   let response = await(users.insert({ name: name }));
   return await(users.findOne(response._id));
 });
 
-let getOrCreateUser = async(function getOrCreateUser(name) {
+let getOrCreateUser = async(function (name) {
   let user = await(users.findOne({ name: name }));
   return user || await createUser(name);
 });</code>
@@ -642,12 +642,12 @@ let getOrCreateUser = async(function getOrCreateUser(name) {
             </h2>
             <div class="align-left">
               <code class="javascript small block">
-let createUser = async(function createUser(name) {
+let createUser = async(function (name) {
   let response = await(users.insert({ name: name }));
   return await(users.findOne(response._id));
 });
 
-let getOrCreateUser = async(function getOrCreateUser(name) {
+let getOrCreateUser = async(function (name) {
   let user = await(users.findOne({ name: name }));
   return user || await(createUser(name));
 });</code>
@@ -842,6 +842,407 @@ function await(argument) {
 }</code>
             </div>
           </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+
+
+
+
+
+
+
+
+
+
+
+
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+
+
+
+
+
+
+
+
+
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    return new Promise(function (resolve, reject) {
+
+
+
+
+
+
+
+    });
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    return new Promise(function (resolve, reject) {
+      new Fiber(function () {
+
+
+
+
+
+      })
+    });
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    return new Promise(function (resolve, reject) {
+      new Fiber(function () {
+
+                  fn.apply(self, args)
+
+
+
+      })
+    });
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    return new Promise(function (resolve, reject) {
+      new Fiber(function () {
+
+          resolve(fn.apply(self, args));
+
+
+
+      })
+    });
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    return new Promise(function (resolve, reject) {
+      new Fiber(function () {
+        try {
+          resolve(fn.apply(self, args));
+        } catch (error) {
+
+        }
+      })
+    });
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    return new Promise(function (resolve, reject) {
+      new Fiber(function () {
+        try {
+          resolve(fn.apply(self, args));
+        } catch (error) {
+          reject(error);
+        }
+      })
+    });
+  };
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function async(fn) {
+  return function () {
+    var self = this;
+    var args = arguments;
+
+    return new Promise(function (resolve, reject) {
+      new Fiber(function () {
+        try {
+          resolve(fn.apply(self, args));
+        } catch (error) {
+          reject(error);
+        }
+      }).run();
+    });
+  };
+}</code>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>
+              These implementations are more powerful than they seem!
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block fragment">
+let createUser = async(function (name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+});
+
+let getOrCreateUser = async(function (name) {
+  let user = await(users.findOne({ name: name }));
+  return user || await(createUser(name));
+});</code>
+            </div>
+            <p class="fragment">
+              How many of these function calls are really necessary?
+              Let's try removing some...
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              These implementations are more powerful than they seem!
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+}
+
+let getOrCreateUser = async(function (name) {
+  let user = await(users.findOne({ name: name }));
+  return user || await(createUser(name));
+});</code>
+            </div>
+            <p>
+              Those <code class="javascript">await</code> calls
+              in <code class="javascript">createUser</code> are legal as
+              long as some <code class="javascript">async</code> function
+              is on the call stack.
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              These implementations are more powerful than they seem!
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+}
+
+let getOrCreateUser = async(function (name) {
+  let user = await(users.findOne({ name: name }));
+  return user || createUser(name);
+});</code>
+            </div>
+            <p>
+              Since <code class="javascript">createUser</code> no longer
+              returns a <code class="javascript">Promise</code>,
+              <code class="javascript">getOrCreateUser</code> no longer
+              needs to <code class="javascript">await</code> it.
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              These implementations are more powerful than they seem!
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+}
+
+let getOrCreateUser = async(function (name) {
+  let user = await(users.findOne({ name: name }));
+  return user || createUser(name);
+});</code>
+            </div>
+            <p>
+              In fact, if you're willing to adopt the practice of running
+              all your code in a <code class="javascript">Fiber</code>...
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              These implementations are more powerful than they seem!
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+}
+
+function getOrCreateUser(name) {
+  let user = await(users.findOne({ name: name }));
+  return user || createUser(name);
+}</code>
+            </div>
+            <p>
+              ... you don't even necessarily have to
+              wrap <code class="javascript">getOrCreateUser</code> as
+              an <code class="javascript">async</code> function!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              These implementations are more powerful than they seem!
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+}
+
+function getOrCreateUser(name) {
+  let user = await(users.findOne({ name: name }));
+  return user || createUser(name);
+}</code>
+            </div>
+            <p>
+              In this coding style,
+              the <code class="javascript">await</code> function becomes a
+              tool for evaluating promises &ldquo;synchronously.&rdquo;
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <h2>
+            It can still be valuable to mark functions
+            as <code class="javascript">async</code>, so that they can run
+            in parallel.
+          </h2>
+          <code class="javascript block fragment">
+let [ben, marley] = await Promise.all([
+  getOrCreateUser("ben"),
+  getOrCreateUser("marley")
+]);
+          </code>
+          <p class="fragment">
+            If <code class="javascript">getOrCreateUser</code>
+            is <code class="javascript">async</code>, then it returns
+            a <code class="javascript">Promise</code>, so
+            <code class="javascript">marley</code> need not wait for
+            <code class="javascript">ben</code>.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            If you need your code to work in an environment without
+            <code class="javascript">Fiber</code>s, it's best to provide a
+            pure-<code class="javascript">Promise</code> API, and think
+            of <code class="javascript">await</code> as a convenience
+            that happens to be available on the server.
+          </h2>
         </section>
       </div>
     </div>
