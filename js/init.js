@@ -1,6 +1,13 @@
 var mobilePattern = /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i;
 Reveal.addEventListener("ready", function() {
-  hljs.initHighlightingOnLoad();
+  var codes = document.querySelectorAll("code.javascript");
+  console.log(codes.length, codes);
+  Array.prototype.forEach.call(codes, function (block) {
+    console.log(block);
+    hljs.highlightBlock(block);
+  });
+
+  // hljs.initHighlightingOnLoad();
   if (navigator.userAgent.match(mobilePattern)) {
     alert("Warning: this presentation is large and contains multitudes, so " +
           "mobile performance may be disappointing.");

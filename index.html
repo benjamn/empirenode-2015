@@ -4,10 +4,10 @@
   <head>
     <meta charset="utf-8">
 
-    <title>reveal.js - The HTML Presentation Framework</title>
+    <title>Why Fibers Make Sense For Meteor</title>
 
-    <meta name="description" content="A framework for easily creating beautiful presentations using HTML">
-    <meta name="author" content="Hakim El Hattab">
+    <meta name="description" content="Why Fibers Make Sense For Meteor">
+    <meta name="author" content="Ben Newman">
 
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -116,6 +116,20 @@
             be <em>simulated</em> without any<br>
             changes to the language.
           </h2>
+          <p class="fragment">
+            <code class="javascript block">
+// ES6 Arrow function
+[1, 3, 21, 10].sort((a, b) => a - b)
+</code>
+          </p>
+          <p class="fragment">
+            <code class="javascript block">
+// ES5 Function expression
+[1, 3, 21, 10].sort(function (a, b) {
+  return a - b;
+})
+</code>
+          </p>
         </section>
 
         <section>
@@ -126,15 +140,86 @@
 
         <section>
           <h2>
-            Today I want to talk about a powerful JavaScript feature that
-            we use at Meteor that cannot be reasonably simulated.
+            Today I want to talk about a powerful feature that cannot be
+            simulated in any reasonable way.
           </h2>
+          <br>
+          <p class="fragment">
+            A &ldquo;reasonable&rdquo; translation must produce code that
+            is readable, debuggable, and recognizable as JavaScript,
+            rather than (say) generating bytecode that runs on a VM
+            implemented in JavaScript.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            And you can use this feature in Meteor today!
+          </h2>
+          <!-- <p class="fragment"> -->
+          <!--   We believe this feature is more useful than -->
+          <!--   dangerous,<span class="fragment"> but reasonable people hold -->
+          <!--   the opposite opinion.</span> -->
+          <!-- </p> -->
         </section>
 
         <section>
           <h1>
-            Coroutines<span class="fragment"> (Fibers)</span>
+            Coroutines<span class="fragment">
+              (<a target="_blank"
+                  href="https://github.com/laverdet/node-fibers">Fibers</a>)
+            </span>
           </h1>
+          <br>
+          <p class="fragment">
+            Imagine if, instead of unwinding the stack, throwing an
+            exception simply paused execution at the point where the
+            exception was thrown, allowing other events to be processed by
+            the event loop, and later you could resume execution from that
+            point.
+          </p>
+        </section>
+
+        <section>
+          <h1>
+            Coroutines
+            (<a target="_blank"
+                href="https://github.com/laverdet/node-fibers">Fibers</a>)
+          </h1>
+          <br>
+          <code class="javascript block fragment left">
+new Fiber(function () {
+  console.log("before");
+  sleep(1000);
+  console.log("after");
+}).run();</code>
+          <code class="javascript block fragment right">
+function sleep(ms) {
+  var fiber = Fiber.current;
+  setTimeout(fiber.run, ms);
+  Fiber.yield();
+}</code>
+        </section>
+
+        <section>
+          <h1>
+            Coroutines
+            (<a target="_blank"
+                href="https://github.com/laverdet/node-fibers">Fibers</a>)
+          </h1>
+          <br>
+          <code class="javascript block left">
+new Fiber(function () {
+  console.log("before");
+  sleep(1000); // Seemingly synchronous!
+  console.log("after");
+}).run();</code>
+          <code class="javascript block right">
+function sleep(ms) {
+  var fiber = Fiber.current;
+  setTimeout(fiber.run, ms);
+  Fiber.yield();
+}</code>
         </section>
 
         <section>
@@ -159,16 +244,606 @@
           </h2>
         </section>
 
+        <section class="external_iframe">
+          <h2>Dave Herman (Mozilla, TC39):</h2>
+          <iframe class="fragment"
+                  src="http://calculist.org/blog/2011/12/14/why-coroutines-wont-work-on-the-web"></iframe>
+        </section>
+
         <section>
-          <pre class="small"><code class="javascript">
-async function fetch(url) {
-  console.log(url);
-  var body = await request(url);
-  return body;
-}</code></pre>
+          <h2>
+            Programming language design is as much about saying
+            &ldquo;no&rdquo; to tempting features as it is about saying
+            &ldquo;yes.&rdquo;
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            If we can agree that making asynchronous programming easier is
+            important to the future of JavaScript,<span class="fragment">
+            and TC39 is not interested in
+            coroutines,<span class="fragment"> then what other remedy do
+            they have in mind?</span></span>
+          </h2>
+        </section>
+
+        <section>
+          <h1>
+            <code class="javascript">async</code> and
+            <code class="javascript">await</code>
+          </h1>
+          <div class="align-left">
+            <code class="javascript small block fragment">
+async function createUser(name) {
+  let response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}</code>
+            <code class="javascript small block fragment">
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code>
+            <code class="javascript small block fragment">
+getOrCreateUser("ben").then(function (ben) {
+  console.log(ben.name);
+});</code>
+          </div>
+          <p class="fragment">
+            Planned for ES7, available today via <a target="_blank"
+            href="https://github.com/facebook/regenerator">Regenerator</a>
+            (ES3+) or <a target="_blank"
+            href="https://www.npmjs.com/package/es7-async-await">es7-async-await</a>
+            (ES6+).
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h2>
+              Let's try that with pure promises...
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block fragment">
+async function createUser(name) {
+  let response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}
+
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}
+
+getOrCreateUser("ben").then(function (ben) {
+  console.log(ben.name);
+});
+
+              </code>
+            </div>
+            <p class="hidden">
+              Slightly more boilerplate, though imagine
+              if <code class="javascript">await</code>
+              appeared inside a loop!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              Let's try that with pure promises...
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name) {
+  return users.insert({ name: name }).then(function (response) {
+    return users.findOne(response._id);
+  });
+}
+
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}
+
+getOrCreateUser("ben").then(function (ben) {
+  console.log(ben.name);
+});
+              </code>
+            </div>
+            <p class="hidden">
+              Slightly more boilerplate, though imagine
+              if <code class="javascript">await</code>
+              appeared inside a loop!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              Let's try that with pure promises...
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name) {
+  return users.insert({ name: name }).then(function (response) {
+    return users.findOne(response._id);
+  });
+}
+
+function getOrCreateUser(name) {
+  return users.findOne({ name: name }).then(function (user) {
+    return user || createUser(name);
+  });
+}
+
+getOrCreateUser("ben").then(function (ben) {
+  console.log(ben.name);
+});</code>
+            </div>
+            <p class="fragment">
+              Slightly more boilerplate, though imagine
+              if <code class="javascript">await</code>
+              appeared inside a loop!
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>
+              What about callbacks?
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block fragment">
+function createUser(name) {
+  return users.insert({ name: name }).then(function (response) {
+    return users.findOne(response._id);
+  });
+}
+
+function getOrCreateUser(name) {
+  return users.findOne({ name: name }).then(function (user) {
+    return user || createUser(name);
+  });
+}
+
+
+
+
+
+
+
+
+              </code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              What about callbacks?
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name, callback) {
+  users.insert({ name: name }).then(function (response) {
+    users.findOne(response._id).then(function (user) {
+      callback(null, user);
+    }, function (error) {
+      callback(error);
+    });
+  }, function (error) {
+    callback(error);
+  });
+}
+
+function getOrCreateUser(name) {
+  return users.findOne({ name: name }).then(function (user) {
+    return user || createUser(name);
+  });
+}
+
+
+              </code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              What about callbacks?
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function createUser(name, callback) {
+  users.insert({ name: name }).then(function (response) {
+    users.findOne(response._id).then(function (user) {
+      callback(null, user);
+    }, function (error) {
+      callback(error);
+    });
+  }, function (error) {
+    callback(error);
+  });
+}
+
+function getOrCreateUser(name, callback) {
+  users.findOne({ name: name }).then(function (user) {
+    if (user) callback(null, user);
+    else createUser(name, callback);
+  }, function (error) {
+    callback(error);
+  });
+}</code>
+            </div>
+          </section>
+        </section>
+
+        <section>
+          <h1>
+            We've come so far!
+          </h1>
+        </section>
+
+        <section>
+          <h1>
+            Can we do better?
+          </h1>
+        </section>
+
+        <section>
+          <section>
+            <h2>
+              If JavaScript had coroutines, we could
+              implement <code class="javascript">async</code>
+              and <code class="javascript">await</code> without any new
+              syntax.
+            </h2>
+            <div class="align-left fragment">
+              <code class="javascript small block">
+async function createUser(name) {
+  let response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}
+
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code>
+            </div>
+            <p class="hidden">
+              Just function calls!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              If JavaScript had coroutines, we could
+              implement <code class="javascript">async</code>
+              and <code class="javascript">await</code> without any new
+              syntax.
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+let createUser = async(function createUser(name) {
+  let response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+});
+
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code>
+            </div>
+            <p class="hidden">
+              Just function calls!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              If JavaScript had coroutines, we could
+              implement <code class="javascript">async</code>
+              and <code class="javascript">await</code> without any new
+              syntax.
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+let createUser = async(function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await users.findOne(response._id);
+});
+
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code>
+            </div>
+            <p class="hidden">
+              Just function calls!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              If JavaScript had coroutines, we could
+              implement <code class="javascript">async</code>
+              and <code class="javascript">await</code> without any new
+              syntax.
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+let createUser = async(function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+});
+
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code>
+            </div>
+            <p class="hidden">
+              Just function calls!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              If JavaScript had coroutines, we could
+              implement <code class="javascript">async</code>
+              and <code class="javascript">await</code> without any new
+              syntax.
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+let createUser = async(function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+});
+
+let getOrCreateUser = async(function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+});</code>
+            </div>
+            <p class="hidden">
+              Just function calls!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              If JavaScript had coroutines, we could
+              implement <code class="javascript">async</code>
+              and <code class="javascript">await</code> without any new
+              syntax.
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+let createUser = async(function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+});
+
+let getOrCreateUser = async(function getOrCreateUser(name) {
+  let user = await(users.findOne({ name: name }));
+  return user || await createUser(name);
+});</code>
+            </div>
+            <p class="hidden">
+              Just function calls!
+            </p>
+          </section>
+
+          <section>
+            <h2>
+              If JavaScript had coroutines, we could
+              implement <code class="javascript">async</code>
+              and <code class="javascript">await</code> without any new
+              syntax.
+            </h2>
+            <div class="align-left">
+              <code class="javascript small block">
+let createUser = async(function createUser(name) {
+  let response = await(users.insert({ name: name }));
+  return await(users.findOne(response._id));
+});
+
+let getOrCreateUser = async(function getOrCreateUser(name) {
+  let user = await(users.findOne({ name: name }));
+  return user || await(createUser(name));
+});</code>
+            </div>
+            <p class="fragment">
+              Just function calls!
+            </p>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block fragment">
+function await(argument) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function await(argument) {
+  var fiber = Fiber.current;
+
+
+
+
+
+
+
+
+
+
+
+
+
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function await(argument) {
+  var fiber = Fiber.current;
+
+  assert.ok(
+    fiber instanceof Fiber,
+    "Cannot await without a Fiber"
+  );
+
+
+
+
+
+
+
+
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function await(argument) {
+  var fiber = Fiber.current;
+
+  assert.ok(
+    fiber instanceof Fiber,
+    "Cannot await without a Fiber"
+  );
+
+
+
+
+
+
+
+  return Fiber.yield();
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function await(argument) {
+  var fiber = Fiber.current;
+
+  assert.ok(
+    fiber instanceof Fiber,
+    "Cannot await without a Fiber"
+  );
+
+  Promise.resolve(argument)
+
+
+
+
+
+  return Fiber.yield();
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function await(argument) {
+  var fiber = Fiber.current;
+
+  assert.ok(
+    fiber instanceof Fiber,
+    "Cannot await without a Fiber"
+  );
+
+  Promise.resolve(argument).then(function (result) {
+
+  }, function (error) {
+
+  });
+
+  return Fiber.yield();
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function await(argument) {
+  var fiber = Fiber.current;
+
+  assert.ok(
+    fiber instanceof Fiber,
+    "Cannot await without a Fiber"
+  );
+
+  Promise.resolve(argument).then(function (result) {
+    fiber.run(result);
+  }, function (error) {
+
+  });
+
+  return Fiber.yield();
+}</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>How might these magical functions be implemented?</h2>
+            <div class="align-left">
+              <code class="javascript small block">
+function await(argument) {
+  var fiber = Fiber.current;
+
+  assert.ok(
+    fiber instanceof Fiber,
+    "Cannot await without a Fiber"
+  );
+
+  Promise.resolve(argument).then(function (result) {
+    fiber.run(result);
+  }, function (error) {
+    fiber.throwInto(error);
+  });
+
+  return Fiber.yield();
+}</code>
+            </div>
+          </section>
         </section>
       </div>
-
     </div>
 
     <script src="lib/js/head.min.js"></script>

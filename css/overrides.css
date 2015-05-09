@@ -4,10 +4,41 @@
 
 .branding {
   position: fixed;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   left: 25px;
   bottom: 25px;
+}
+
+.reveal div.align-left {
+  text-align: left;
+  padding-left: 15%;
+}
+
+.reveal code {
+  white-space: pre-wrap;
+  text-align: left;
+  display: inline;
+}
+
+.reveal code.block {
+  display: inline-block;
+}
+
+.reveal code.small,
+.reveal code.left,
+.reveal code.right {
+  font-size: 20px;
+}
+
+.reveal code.left {
+  width: 50%;
+  float: left;
+}
+
+.reveal code.right {
+  width: 40%;
+  float: right;
 }
 
 .reveal h1,
@@ -28,42 +59,6 @@
   display: inline-block;
   margin: 0 auto;
   width: auto;
-}
-
-body > .CodeMirror {
-  visibility: hidden;
-}
-
-.CodeMirror {
-  font-family: monospace !important;
-  line-height: 1.2em !important;
-}
-
-section#tilde-trick-traverse .CodeMirror,
-section#rest-param-traverse .CodeMirror,
-section#arrow-fn-traverse .CodeMirror,
-section#generator-codegen .CodeMirror,
-section#for-stmt-codegen .CodeMirror,
-section#loc-and-mark .CodeMirror,
-section#jump-if-not .CodeMirror,
-section#explode-statement .CodeMirror,
-section#exception-handling .CodeMirror,
-section#async-codegen .CodeMirror {
-  display: block;
-  position: relative;
-  margin: 0;
-  left: 200px;
-}
-section#loc-and-mark .CodeMirror {
-  left: 120px;
-}
-
-.CodeMirror.big {
-  font-size: 32px;
-}
-
-.CodeMirror.small {
-  font-size: 20px;
 }
 
 section.full_height,
@@ -114,22 +109,6 @@ img.interstitial {
 
 .reveal section .thanks img {
   z-index: -1;
-}
-
-.CodeMirror {
-  background: none;
-  height: auto;
-  display: inline-block;
-  margin: 20px auto;
-
-  overflow-x: auto;
-  overflow-y: hidden;
-  font-family: monospace;
-}
-
-.reveal section .CodeMirror-scroll {
-  padding: 1em;
-  margin: -1em;
 }
 
 .reveal section.tweet {
