@@ -16,17 +16,13 @@
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/benjamn.css" id="theme">
-    <link rel="stylesheet" type="text/css" href="CodeMirror/lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="css/overrides.css">
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/xcode.css">
 
-    <script src="CodeMirror/lib/codemirror.js"></script>
-    <script src="CodeMirror/mode/javascript/javascript.js"></script>
-    <script src="CodeMirror/mode/xml/xml.js"></script>
-    <script src="CodeMirror/mode/shell/shell.js"></script>
-    <script src="js/editor.js"></script>
+    <script src="plugin/highlight/javascript.js"></script>
+    <script src="plugin/highlight/bash.js"></script>
 
     <!-- Printing and PDF exports -->
     <script>
@@ -67,10 +63,10 @@
         </section>
 
         <section>
-          <pre class="small" data-language="javascript">
+          <pre class="small"><code class="javascript">
 async function fetch(url) {
   var body = await request(url);
-}</pre>
+}</code></pre>
         </section>
       </div>
 
