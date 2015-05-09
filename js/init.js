@@ -1,3 +1,12 @@
+var mobilePattern = /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i;
+Reveal.addEventListener("ready", function() {
+  hljs.initHighlightingOnLoad();
+  if (navigator.userAgent.match(mobilePattern)) {
+    alert("Warning: this presentation is large and contains multitudes, so " +
+          "mobile performance may be disappointing.");
+  }
+});
+
 // Full list of configuration options available at:
 // https://github.com/hakimel/reveal.js#configuration
 Reveal.initialize({
@@ -23,15 +32,6 @@ Reveal.initialize({
     src: 'plugin/markdown/markdown.js',
     condition: function() {
       return !!document.querySelector( '[data-markdown]' );
-    }
-  }, {
-    src: 'plugin/highlight/highlight.js',
-    async: true,
-    condition: function() {
-      return !!document.querySelector( 'pre' );
-    },
-    callback: function() {
-      hljs.initHighlightingOnLoad();
     }
   }, {
     src: 'plugin/zoom-js/zoom.js',
