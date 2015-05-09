@@ -1244,6 +1244,68 @@ let [ben, marley] = await Promise.all([
             that happens to be available on the server.
           </h2>
         </section>
+
+        <section>
+          <h1>Summary</h1>
+          <br>
+          <p class="fragment">
+            You can think of coroutines as a <em>relaxation</em> of the
+            ES7 <code class="javascript">async</code>
+            and <code class="javascript">await</code>
+            syntax,<span class="fragment"> in which
+            <code class="javascript">await</code> is allowed to appear in
+            the body of any function called within
+            a <code class="javascript">Fiber</code>,<span class="fragment">
+            instead of being restricted to the bodies of functions that
+            are explicitly marked
+            <code class="javascript">async</code>.
+            </span></span>
+          </p>
+        </section>
+
+        <section>
+          <h1>Summary</h1>
+          <br>
+          <p class="fragment">
+            This is great news for a framework like
+            Meteor,<span class="fragment"> because we can wrap our
+            top-level request and event handlers
+            in <code class="javascript">Fiber</code>s<span class="fragment">,
+            then use <code class="javascript">await</code> to implement
+            certain asynchronous library
+            operations,<span class="fragment"> and none of the code in
+            between has to know about coroutines at
+            all.</span></span></span>
+          </p>
+        </section>
+
+        <section>
+          <h1>Summary</h1>
+          <br>
+          <p class="fragment">
+            Best of all,<span class="fragment"> the adoption of
+            ES7 <code class="javascript">async</code>
+            and <code class="javascript">await</code> means we will not
+            need any new syntax if we ever decide to adopt
+            coroutines,<span class="fragment"> because anything you might
+            want to do with coroutines can be expressed in terms
+            of <code class="javascript">async</code>
+            and <code class="javascript">await</code>,<span class="fragment">
+            just with slightly relaxed rules about
+            where <code class="javascript">await</code> can legally
+            appear.</span></span></span>
+          </p>
+        </section>
+
+        <section>
+          <h1>There has to be a catch, right?</h1>
+        </section>
+
+        <section>
+          <h2>
+            Catch #1:<span class="fragment"> Fibers are server-only</span>
+          </h2>
+        </section>
       </div>
     </div>
 
