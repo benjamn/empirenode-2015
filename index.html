@@ -16,10 +16,17 @@
 
     <link rel="stylesheet" href="css/reveal.css">
     <link rel="stylesheet" href="css/theme/benjamn.css" id="theme">
+    <link rel="stylesheet" type="text/css" href="CodeMirror/lib/codemirror.css">
     <link rel="stylesheet" type="text/css" href="css/overrides.css">
 
     <!-- Code syntax highlighting -->
     <link rel="stylesheet" href="lib/css/xcode.css">
+
+    <script src="CodeMirror/lib/codemirror.js"></script>
+    <script src="CodeMirror/mode/javascript/javascript.js"></script>
+    <script src="CodeMirror/mode/xml/xml.js"></script>
+    <script src="CodeMirror/mode/shell/shell.js"></script>
+    <script src="js/editor.js"></script>
 
     <!-- Printing and PDF exports -->
     <script>
@@ -57,6 +64,13 @@
   <a target="_blank" href="http://facebook.com/benjamn">facebook</a>
 }.com/benjamn</pre>
           </p>
+        </section>
+
+        <section>
+          <pre class="small" data-language="javascript">
+async function fetch(url) {
+  var body = await request(url);
+}</pre>
         </section>
       </div>
 
