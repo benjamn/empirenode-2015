@@ -1,9 +1,7 @@
 var mobilePattern = /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile/i;
 Reveal.addEventListener("ready", function() {
   var codes = document.querySelectorAll("code.javascript");
-  console.log(codes.length, codes);
   Array.prototype.forEach.call(codes, function (block) {
-    console.log(block);
     hljs.highlightBlock(block);
   });
 
