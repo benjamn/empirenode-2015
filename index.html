@@ -1333,6 +1333,54 @@ let [ben, marley] = await Promise.all([
           <!-- TODO Show createUser and sleep with relaxed await -->
         </section>
 
+        <section class="fixed-height" data-transition="fade">
+          <h1>Summary</h1>
+          <br>
+          <code class="javascript small block fragment">
+async function createUser(name) {
+  let response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}
+
+async function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code>
+        </section>
+
+        <section class="fixed-height" data-transition="fade">
+          <h1>Summary</h1>
+          <br>
+          <code class="javascript small block">
+      function createUser(name) {
+  let response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}
+
+      function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user ||       createUser(name);
+}</code>
+        </section>
+
+        <section class="fixed-height" data-transition="fade">
+          <h1>Summary</h1>
+          <br>
+          <code class="javascript small block">
+function createUser(name) {
+  let response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}
+
+function getOrCreateUser(name) {
+  let user = await users.findOne({ name: name });
+  return user || createUser(name);
+}</code>
+          <p class="fragment">
+
+          </p>
+        </section>
+
         <section class="fixed-height">
           <h1>Summary</h1>
           <br>
@@ -1516,6 +1564,83 @@ function getOrCreateUser(name) {
     case 8:
       return context$1$0.abrupt("return", context$1$0.t1);
     case 9:
+    case "end":
+      return context$1$0.stop();
+    }
+  }, null, this);
+}</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="fixed-height">
+          <h2>And why would that be bad?</h2>
+          <div class="align-left">
+            <code class="javascript small block fragment">
+async function createUser(name) {
+  var response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}</code>
+          </div>
+        </section>
+
+        <section class="fixed-height">
+          <h2>And why would that be bad?</h2>
+          <div class="align-left">
+            <code class="javascript small block">
+async function createUser(name) {
+  var response = await (await users).insert({ name: await name });
+  return await (await users).findOne(await response._id);
+}</code>
+          </div>
+        </section>
+
+        <section class="fixed-height">
+          <h2>And why would that be bad?</h2>
+          <table class="side-by-side">
+            <tbody>
+              <tr>
+                <td><code class="javascript very-small block">
+function createUser(name) {
+  var response;
+
+  return regeneratorRuntime.async(function (context$1$0) {
+    while (1) switch (context$1$0.prev = context$1$0.next) {
+    case 0:
+      context$1$0.next = 2;
+      return users;
+    case 2:
+      context$1$0.next = 4;
+      return name;
+    case 4:
+      context$1$0.t0 = context$1$0.sent;
+      context$1$0.next = 7;
+
+      return context$1$0.sent.insert({
+        name: context$1$0.t0
+      });
+</code></td>
+                <td><code class="javascript very-small block">
+
+
+
+
+
+    case 7:
+      response = context$1$0.sent;
+      context$1$0.next = 10;
+      return users;
+    case 10:
+      context$1$0.next = 12;
+      return response._id;
+    case 12:
+      context$1$0.t1 = context$1$0.sent;
+      context$1$0.next = 15;
+      return context$1$0.sent.findOne(context$1$0.t1);
+    case 15:
+      return context$1$0.abrupt("return", context$1$0.sent);
+    case 16:
     case "end":
       return context$1$0.stop();
     }
