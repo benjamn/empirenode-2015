@@ -1319,8 +1319,8 @@ let [ben, marley] = await Promise.all([
         <section>
           <h2>
             Catch #1:<span class="fragment">
-              <code class="javascript">Fiber</code>s
-              probably won't work in the browser</span>
+              <code class="javascript">Fiber</code>s are unlikely ever to
+              work in the browser</span>
           </h2>
           <p class="fragment">
             For a framework that strives to be isomorphic, this
@@ -1330,30 +1330,95 @@ let [ben, marley] = await Promise.all([
 
         <section>
           <h2>
+            Could we simulate <code class="javascript">Fiber</code>s using
+            ES7 <code class="javascript">async</code> and
+            <code class="javascript">await</code>?
+          </h2>
+          <p class="fragment">
+            Technically yes, though it would
+            require <code class="javascript">await</code>ing any
+            expression that might possibly be
+            a <code class="javascript">Promise</code>.
+          </p>
+          <p class="fragment">
+            Which would require making any function containing
+            an <code class="javascript">await</code> expression
+            an <code class="javascript">async</code> function.
+          </p>
+          <p class="fragment">
+            Without a stronger type system, this process would likely lead
+            to making nearly every function in your
+            codebase <code class="javascript">async</code>.
+          </p>
+        </section>
+
+        <section>
+          <h2>And why would that be bad?</h2>
+        </section>
+
+        <section>
+          <h2>
             Catch #2:<span class="fragment">
               Mutating shared global state is tricky
               with <code class="javascript">Fiber</code>s
             </span>
           </h2>
+          <p class="fragment">
+            Minimizing the use of mutable shared global state is a good
+            idea in general, of course.
+          </p>
+          <p class="fragment">
+            One particular instance of shared global state that may be
+            difficult to avoid:<span class="fragment"> the <b>file
+            system</b>.</span>
+          </p>
         </section>
 
         <section>
           <h2>
-            Catch #3:<span class="fragment">
-              Native third-party modules sometimes don't work well
-              with <code class="javascript">Fiber</code>s
-            </span>
+            How we write safe file system code
+            with <code class="javascript">Fiber</code>s
           </h2>
+          <p class="fragment">
+            <code class="javascript small block">
+fiberHelpers.noYieldsAllowed(function () {
+  // Any calls to Fiber.yield will throw.
+});</code>
+          </p>
+          <p class="fragment">
+            This could probably be improved by restricting what kind of
+            events can run while the
+            current <code class="javascript">Fiber</code> is yielding,
+            rather than preventing the
+            <code class="javascript">Fiber</code> from yielding at all.
+          </p>
+          <p class="fragment">
+            We also wrap the functions in Node's <code>fs</code> module to
+            be asynchronous when
+            <code class="javascript">Fiber.current</code> is defined and
+            synchronous otherwise.
+          </p>
         </section>
 
         <section>
           <h2>
-            Catch #4:<span class="fragment">
-              Meteor has to ship a specific
-              binary version of Node to guarantee support
-              for <code class="javascript">Fiber</code>s
-            </span>
+            Catch #3:<span class="fragment"> Ensuring compatibility with
+              <code class="javascript">Fiber</code>s is an ongoing
+              burden for Meteor.</span>
           </h2>
+          <p class="fragment">
+            Other native modules might not work well
+            with <code class="javascript">Fiber</code>s.
+          </p>
+          <p class="fragment">
+            Upgrading Node versions could be tricky if changes to the V8
+            API make <code class="javascript">Fiber</code>s harder to
+            implement.
+          </p>
+          <p class="fragment">
+            Fortunately we have plenty of warning, and we ship specific
+            versions of Node and all our packages.
+          </p>
         </section>
       </div>
     </div>
