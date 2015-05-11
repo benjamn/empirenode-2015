@@ -29,17 +29,32 @@
 .reveal code.left,
 .reveal code.right {
   font-size: 20px;
+  overflow: visible;
+}
+
+.reveal code.very-small {
+  font-size: 16px;
 }
 
 .reveal code.left {
   width: 55%;
   float: left;
-  overflow: visible;
 }
 
 .reveal code.right {
-  width: 40%;
+  width: 45%;
   float: right;
+}
+
+.reveal section table.side-by-side {
+  width: 140%;
+  position: relative;
+  left: -20%;
+}
+
+.reveal section table.side-by-side td {
+  vertical-align: top;
+  width: 50%;
 }
 
 .reveal h1,
@@ -144,4 +159,8 @@ img.interstitial {
 
 .reveal section h2 {
   line-height: 1.2em !important;
+}
+
+.reveal section.fixed-height {
+  height: 100%;
 }

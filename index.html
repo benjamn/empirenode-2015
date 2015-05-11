@@ -45,6 +45,7 @@
 
       <!-- Any section element inside of this container is displayed as a slide -->
       <div class="slides">
+        <!-- TODO Use the GOTO intro/final slides -->
         <section>
           <h1>Why Fibers Make Sense For Meteor</h1>
           <p>
@@ -73,7 +74,7 @@
         <section>
           <h2>
             How do<br>
-            natural languages<br>
+            programming languages<br>
             change?
           </h2>
         </section>
@@ -81,7 +82,7 @@
         <section>
           <h2>
             How do<br>
-            programming languages<br>
+            natural languages<br>
             change?
           </h2>
         </section>
@@ -156,11 +157,6 @@
           <h2>
             And you can use this feature in Meteor today!
           </h2>
-          <!-- <p class="fragment"> -->
-          <!--   We believe this feature is more useful than -->
-          <!--   dangerous,<span class="fragment"> but reasonable people hold -->
-          <!--   the opposite opinion.</span> -->
-          <!-- </p> -->
         </section>
 
         <section>
@@ -172,13 +168,17 @@
           </h1>
           <br>
           <p class="fragment">
-            Imagine if,<span class="fragment"> instead of unwinding the
-            stack,<span class="fragment"> throwing an exception simply
-            paused execution at the point where the exception was
-            thrown,<span class="fragment"> allowing other events to be
-            processed by the event loop,<span class="fragment"> and later
-            you could resume execution from that
-            point.</span></span></span></span>
+            JavaScript has a strict <b>run-to-completion</b> execution
+            model,<span class="fragment"> meaning that the current call
+            stack must unwind completely before any other events can be
+            handled by the event loop.</span>
+          </p>
+          <p class="fragment">
+            If you've ever wished you could simply <em>pause</em> the
+            current call stack,<span class="fragment"> let some other
+            events run,<span class="fragment"> and then later resume where
+            you left off,<psan class="fragment"> that's exactly what
+            coroutines are for.</span></span></span>
           </p>
         </section>
 
@@ -224,7 +224,7 @@ function sleep(ms) {
 }</code>
         </section>
 
-        <section>
+        <section class="fixed-height">
           <h2>
             Many other languages<br>
             support coroutines!
@@ -236,6 +236,24 @@ function sleep(ms) {
             High Level Assembly, Icon, Io, Julia, Limbo, Lua, Lucid, µC++,
             MiniD, Modula-2, Nemerle, Perl, PHP, Picolisp, Prolog, Python,
             Ruby, Rust, Sather, Scheme, Self, Simula 67, Squirrel,
+            Stackless Python, SuperCollider, Tcl, urbiscript
+          </p>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Many other languages<br>
+            support coroutines!
+          </h2>
+          <br>
+          <p>
+            Aikido, AngelScript, BCPL, Pascal, BETA, BLISS, <b>C#</b>,
+            ChucK, <b>D</b>, Dynamic C, <b>Erlang</b>, F#, Factor,
+            GameMonkey Script, <b>Go</b>, <b>Haskell</b>, High Level
+            Assembly, Icon, Io, <b>Julia</b>, Limbo, <b>Lua</b>, Lucid,
+            µC++, MiniD, Modula-2, Nemerle, <b>Perl</b>, PHP, Picolisp,
+            Prolog, <b>Python</b>, <b>Ruby</b>, <b>Rust</b>,
+            Sather, <b>Scheme</b>, <b>Self</b>, Simula 67, Squirrel,
             Stackless Python, SuperCollider, Tcl, urbiscript
           </p>
         </section>
@@ -1081,11 +1099,7 @@ function async(fn) {
             Once we have these two functions in our
             toolchain,<span class="fragment"> we can forget they were
             implemented
-            using <code class="javascript">Fiber</code>s,<span class="fragment">
-            just as I forgot to mention that <a target="_blank"
-            href="https://github.com/laverdet/node-fibers"><code>node-fibers</code></a>
-            is implemented on top of <a target="_blank"
-            href="http://software.schmorp.de/pkg/libcoro.html"><code>libcoro</code></a>.</span></span>
+            using <code class="javascript">Fiber</code>s!</span>
           </h2>
         </section>
 
@@ -1250,21 +1264,61 @@ let [ben, marley] = await Promise.all([
           </p>
         </section>
 
-        <section>
+        <section class="fixed-height">
           <h2>
-            If you need your code to work in an environment without
-            <code class="javascript">Fiber</code>s, it's best to provide a
-            pure-<code class="javascript">Promise</code> API, and think
-            of <code class="javascript">await</code> as a convenience
-            that happens to be available on the server.
+            How does Meteor allow<br>
+            database access on the client?
           </h2>
+          <p class="fragment">
+            <a target="_blank"
+               href="https://www.meteor.com/mini-databases"><b>Minimongo</b></a>
+               is essentially a sophisticated cache that supports a subset
+               of the <code class="javascript">MongoCollection</code> API
+               (<code class="javascript">.find</code>,
+            <code class="javascript">.findOne</code>,
+            <code class="javascript">.insert</code>,
+            <code class="javascript">.update</code>,
+            <code class="javascript">.remove</code>).
+          </p>
+          <p class="fragment">
+            These operations have to return
+            immediately,<span class="fragment"> and sometimes no results
+            are available the first time!</span>
+          </p>
+          <p class="fragment">
+            Acceptable because Meteor automatically rerenders the UI
+            whenever different data become available.
+          </p>
         </section>
 
-        <section>
+        <section class="fixed-height">
+          <h2>
+            How should Meteor allow<br>
+            database access on the client?
+          </h2>
+          <p class="fragment">
+            If we wanted the database access API on the client to work
+            like the one on the server,<span class="fragment"> we could
+            rewrite both to
+            return <code class="javascript">Promise</code> objects.</span>
+          </p>
+          <p class="fragment">
+            Now that <code class="javascript">Promise</code>s are baked
+            into ES6, most new asynchronous APIs should be written in that
+            style.
+          </p>
+          <p class="fragment">
+            You could then think of <code class="javascript">await</code>
+            merely as a convenience that happens to be available on the
+            server.
+          </p>
+        </section>
+
+        <section class="fixed-height">
           <h1>Summary</h1>
           <br>
           <p class="fragment">
-            You can think of coroutines as a <em>relaxation</em> of the
+            Coroutines are a <em>relaxation</em> of
             ES7 <code class="javascript">async</code>
             and <code class="javascript">await</code>
             syntax,<span class="fragment"> in which
@@ -1276,9 +1330,10 @@ let [ben, marley] = await Promise.all([
             <code class="javascript">async</code>.
             </span></span>
           </p>
+          <!-- TODO Show createUser and sleep with relaxed await -->
         </section>
 
-        <section>
+        <section class="fixed-height">
           <h1>Summary</h1>
           <br>
           <p class="fragment">
@@ -1288,20 +1343,20 @@ let [ben, marley] = await Promise.all([
             in <code class="javascript">Fiber</code>s<span class="fragment">,
             then use <code class="javascript">await</code> to implement
             certain asynchronous library
-            operations,<span class="fragment"> and none of the code in
+            operations,<span class="fragment"> and <b>none of the code in
             between has to know about coroutines at
-            all.</span></span></span>
+            all.</b></span></span></span>
           </p>
         </section>
 
-        <section>
+        <section class="fixed-height">
           <h1>Summary</h1>
           <br>
           <p class="fragment">
             Best of all,<span class="fragment"> the adoption of
             ES7 <code class="javascript">async</code>
-            and <code class="javascript">await</code> means we will not
-            need any new syntax if we ever decide to adopt
+            and <code class="javascript">await</code> means TC39 will not
+            have to invent any new syntax if we ever decide to adopt
             coroutines,<span class="fragment"> because anything you might
             want to do with coroutines can be expressed in terms
             of <code class="javascript">async</code>
@@ -1319,8 +1374,8 @@ let [ben, marley] = await Promise.all([
         <section>
           <h2>
             Catch #1:<span class="fragment">
-              <code class="javascript">Fiber</code>s are unlikely ever to
-              work in the browser</span>
+              Simulating <code class="javascript">Fiber</code>s in the
+              browser is difficult.</span>
           </h2>
           <p class="fragment">
             For a framework that strives to be isomorphic, this
@@ -1330,30 +1385,145 @@ let [ben, marley] = await Promise.all([
 
         <section>
           <h2>
-            Could we simulate <code class="javascript">Fiber</code>s using
-            ES7 <code class="javascript">async</code> and
+            Could we implement <code class="javascript">Fiber</code>s
+            using ES7 <code class="javascript">async</code> and
             <code class="javascript">await</code>?
           </h2>
           <p class="fragment">
-            Technically yes, though it would
+            Technically yes,<span class="fragment"> though it would
             require <code class="javascript">await</code>ing any
-            expression that might possibly be
-            a <code class="javascript">Promise</code>.
+            expression that might possibly evaluate to
+            a <code class="javascript">Promise</code>.</span>
           </p>
           <p class="fragment">
-            Which would require making any function containing
-            an <code class="javascript">await</code> expression
-            an <code class="javascript">async</code> function.
+            Any function containing
+            an <code class="javascript">await</code> expression would have
+            to become an <code class="javascript">async</code> function.
           </p>
           <p class="fragment">
-            Without a stronger type system, this process would likely lead
-            to making nearly every function in your
-            codebase <code class="javascript">async</code>.
+            The results of all those
+            new <code class="javascript">async</code> functions would have
+            to be <code class="javascript">await</code>ed, and so on.
+          </p>
+          <p class="fragment">
+            Without strong type inference, nearly every function in your
+            codebase would become <code class="javascript">async</code>.
           </p>
         </section>
 
-        <section>
+        <section class="fixed-height">
           <h2>And why would that be bad?</h2>
+          <table class="side-by-side">
+            <tbody>
+              <tr>
+                <td><code class="javascript small block fragment">
+async function createUser(name) {
+  var response = await users.insert({ name: name });
+  return await users.findOne(response._id);
+}</code></td>
+                <td><code class="javascript small block fragment">
+async function getOrCreateUser(name) {
+  var user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="fixed-height">
+          <h2>And why would that be bad?</h2>
+          <table class="side-by-side">
+            <tbody>
+              <tr>
+                <td><code class="javascript very-small block">
+function createUser(name) {
+  var response;
+
+  return regeneratorRuntime.async(function (context$1$0) {
+    while (1) switch (context$1$0.prev = context$1$0.next) {
+    case 0:
+      context$1$0.next = 2;
+      return users.insert({ name: name });
+    case 2:
+      response = context$1$0.sent;
+      context$1$0.next = 5;
+      return users.findOne(response._id);
+    case 5:
+      return context$1$0.abrupt("return", context$1$0.sent);
+    case 6:
+    case "end":
+      return context$1$0.stop();
+    }
+  }, null, this);
+}</code></td>
+                <td><code class="javascript small block">
+async function getOrCreateUser(name) {
+  var user = await users.findOne({ name: name });
+  return user || await createUser(name);
+}</code></td>
+              </tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section class="fixed-height">
+          <h2>And why would that be bad?</h2>
+          <table class="side-by-side">
+            <tbody>
+              <tr>
+                <td><code class="javascript very-small block">
+function createUser(name) {
+  var response;
+
+  return regeneratorRuntime.async(function (context$1$0) {
+    while (1) switch (context$1$0.prev = context$1$0.next) {
+    case 0:
+      context$1$0.next = 2;
+      return users.insert({ name: name });
+    case 2:
+      response = context$1$0.sent;
+      context$1$0.next = 5;
+      return users.findOne(response._id);
+    case 5:
+      return context$1$0.abrupt("return", context$1$0.sent);
+    case 6:
+    case "end":
+      return context$1$0.stop();
+    }
+  }, null, this);
+}</code></td>
+                <td><code class="javascript very-small block">
+function getOrCreateUser(name) {
+  var user;
+
+  return regeneratorRuntime.async(function (context$1$0) {
+    while (1) switch (context$1$0.prev = context$1$0.next) {
+    case 0:
+      context$1$0.next = 2;
+      return users.findOne({ name: name });
+    case 2:
+      user = context$1$0.sent;
+      context$1$0.t1 = user;
+      if (context$1$0.t1) {
+        context$1$0.next = 8;
+        break;
+      }
+      context$1$0.next = 7;
+      return createUser(name);
+    case 7:
+      context$1$0.t1 = context$1$0.sent;
+    case 8:
+      return context$1$0.abrupt("return", context$1$0.t1);
+    case 9:
+    case "end":
+      return context$1$0.stop();
+    }
+  }, null, this);
+}</code></td>
+              </tr>
+            </tbody>
+          </table>
         </section>
 
         <section>
@@ -1386,10 +1556,9 @@ fiberHelpers.noYieldsAllowed(function () {
 });</code>
           </p>
           <p class="fragment">
-            This could probably be improved by restricting what kind of
-            events can run while the
-            current <code class="javascript">Fiber</code> is yielding,
-            rather than preventing the
+            This could be improved by restricting what kind of events can
+            run while the current <code class="javascript">Fiber</code> is
+            yielding, rather than preventing the
             <code class="javascript">Fiber</code> from yielding at all.
           </p>
           <p class="fragment">
@@ -1402,18 +1571,17 @@ fiberHelpers.noYieldsAllowed(function () {
 
         <section>
           <h2>
-            Catch #3:<span class="fragment"> Ensuring compatibility with
-              <code class="javascript">Fiber</code>s is an ongoing
-              burden for Meteor.</span>
+            Catch #3:<span class="fragment"> Ensuring compatibility
+              with <code class="javascript">Fiber</code>s is a
+              burden.</span>
           </h2>
           <p class="fragment">
             Other native modules might not work well
             with <code class="javascript">Fiber</code>s.
           </p>
           <p class="fragment">
-            Upgrading Node versions could be tricky if changes to the V8
-            API make <code class="javascript">Fiber</code>s harder to
-            implement.
+            Our ability to keep up-to-date with the latest Node could be
+            impeded by changes to its native module API.
           </p>
           <p class="fragment">
             Fortunately we have plenty of warning, and we ship specific
