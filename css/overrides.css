@@ -105,22 +105,11 @@ img.interstitial {
   zoom: 1 !important;
 }
 
-.reveal section img#yield_ahead,
-.reveal section img#wires,
 .reveal section .thanks {
-  position: relative;
-  top: -25px;
-}
-
-.reveal section img#yield_ahead {
-  max-height: 700px;
-}
-
-.reveal section .thanks h2 {
   color: white;
   position: absolute;
-  left: 700px;
-  top: 250px;
+  left: 0;
+  top: 300px;
 }
 
 .reveal section .thanks img {
