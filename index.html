@@ -1333,7 +1333,7 @@ let [ben, marley] = await Promise.all([
           <!-- TODO Show createUser and sleep with relaxed await -->
         </section>
 
-        <section class="fixed-height" data-transition="fade">
+        <section class="fixed-height">
           <h1>Summary</h1>
           <br>
           <code class="javascript small block fragment">
@@ -1348,7 +1348,7 @@ async function getOrCreateUser(name) {
 }</code>
         </section>
 
-        <section class="fixed-height" data-transition="fade">
+        <section class="fixed-height">
           <h1>Summary</h1>
           <br>
           <code class="javascript small block">
@@ -1363,7 +1363,7 @@ async function getOrCreateUser(name) {
 }</code>
         </section>
 
-        <section class="fixed-height" data-transition="fade">
+        <section class="fixed-height">
           <h1>Summary</h1>
           <br>
           <code class="javascript small block">
@@ -1375,9 +1375,12 @@ function createUser(name) {
 function getOrCreateUser(name) {
   let user = await users.findOne({ name: name });
   return user || createUser(name);
-}</code>
-          <p class="fragment">
+}
 
+
+          </code>
+          <p class="fragment">
+            This future is possible.
           </p>
         </section>
 
@@ -1621,7 +1624,7 @@ function createUser(name) {
         name: context$1$0.t0
       });
 </code></td>
-                <td><code class="javascript very-small block">
+                <td><code class="javascript very-small block fragment">
 
 
 
