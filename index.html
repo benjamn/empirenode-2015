@@ -55,10 +55,336 @@
 
         <section>
           <h2>
-            How do<br>
-            languages<br>
-            change?
+            Have you ever tried describing Meteor
+            <span class="fragment">without mentioning <em>JavaScript</em>?</span>
           </h2>
+        </section>
+
+        <section>
+          <h2>
+            The <em class="fragment">JavaScript</em> App Platform
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            Meteor is a complete open source platform
+            <span class="fragment">for building web and mobile apps</span>
+            <span class="fragment">in <em>pure JavaScript</em></span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            What are we talking about<span class="fragment"><br>when we talk
+            about <em>JavaScript</em>?</span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            The language that runs in web
+            browsers<span class="fragment">, the one that hasn't changed
+            all that much since the early 2000s?</span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            The language that puts the &ldquo;JS&rdquo;<br>
+            <span class="fragment">in Node.JS?</span>
+          </h2>
+          <p class="fragment">
+            But which version of Node?
+          </p>
+        </section>
+
+        <section>
+          <h3>
+            How much of the standard library actually works according to
+            the specification?
+          </h3>
+        </section>
+
+        <section>
+          <h3>
+            Which specification<br>
+            are we talking about?
+          </h3>
+        </section>
+
+        <section>
+          <h3>
+            Can you run the same code<br>
+            in a web browser?
+          </h3>
+        </section>
+
+        <section>
+          <h3>
+            What kind of module system<br>
+            does Meteor support?
+          </h3>
+        </section>
+
+        <section>
+          <h3>
+            What is this about <code>Fiber</code>s?
+          </h3>
+        </section>
+
+        <section>
+          <h2>
+            These questions have answers!
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            The most valuable property of any programming language:
+          </h2>
+          <br>
+          <p class="fragment">
+            Everyone can agree precisely what will happen when a computer
+            runs a program written in that language.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            &ldquo;JavaScript&rdquo; conveys much of the necessary information
+          </h2>
+          <br>
+          <p class="fragment">
+            A vast audience of programmers still know it by that name.
+          </p>
+          <p class="fragment">
+            And that's why we keep using it.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            But programming languages<br>
+            can change<span class="fragment">,
+            and JavaScript is changing faster than ever</span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            Easier than ever to propose new language
+            features<span class="fragment">, build consensus around
+            <a target="_blank"
+               href="https://github.com/tc39/ecma262/blob/master/README.md">those
+            proposals</a></span><span class="fragment">, and get them
+            implemented.</span>
+          </h2>
+        </section>
+
+        <section>
+          <h3>
+            We've been using features from the latest version of
+            JavaScript<span class="fragment"> (ECMAScript
+            2015)</span><span class="fragment"> in the code that
+            implements the <code>meteor</code> command-line tool.</span>
+          </h3>
+          <br>
+          <p class="fragment">
+            And it's great.
+          </p>
+        </section>
+
+        <section>
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small fragment">
+function JsFile() {
+  InputFile.apply(this, arguments);
+}
+
+JsFile.prototype = Object.create(InputFile.prototype);
+JsFile.prototype.constructor = JsFile;
+
+JsFile.prototype.addJavaScript = function (options) {
+  this._minifiedFiles.push({
+    data: options.data,
+    sourceMap: options.sourceMap,
+    path: options.path
+  });
+};
+
+exports.JsFile = JsFile;</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+class JsFile extends InputFile {
+  constructor() {
+    InputFile.apply(this, arguments);
+  }
+}
+
+
+JsFile.prototype.addJavaScript = function (options) {
+  this._minifiedFiles.push({
+    data: options.data,
+    sourceMap: options.sourceMap,
+    path: options.path
+  });
+};
+
+exports.JsFile = JsFile;</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+class JsFile extends InputFile {
+  constructor() {
+    InputFile.apply(this, arguments);
+  }
+
+  addJavaScript(options) {
+    this._minifiedFiles.push({
+      data: options.data,
+      sourceMap: options.sourceMap,
+      path: options.path
+    });
+  }
+}
+
+exports.JsFile = JsFile;
+              </code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+class JsFile extends InputFile {
+
+
+
+
+  addJavaScript(options) {
+    this._minifiedFiles.push({
+      data: options.data,
+      sourceMap: options.sourceMap,
+      path: options.path
+    });
+  }
+}
+
+exports.JsFile = JsFile;
+              </code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+class JsFile extends InputFile {
+  addJavaScript(options) {
+    this._minifiedFiles.push({
+      data: options.data,
+      sourceMap: options.sourceMap,
+      path: options.path
+    });
+  }
+}
+
+exports.JsFile = JsFile;</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+class JsFile extends InputFile {
+  addJavaScript({ data, sourceMap, path }) {
+    this._minifiedFiles.push({
+      data: data,
+      sourceMap: sourceMap,
+      path: path
+    });
+  }
+}
+
+exports.JsFile = JsFile;</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+class JsFile extends InputFile {
+  addJavaScript({ data, sourceMap, path }) {
+    this._minifiedFiles.push({
+      data,
+      sourceMap,
+      path,
+    });
+  }
+}
+
+exports.JsFile = JsFile;</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+class JsFile extends InputFile {
+  addJavaScript({ data, sourceMap, path }) {
+    this._minifiedFiles.push({ data, sourceMap, path });
+  }
+}
+
+exports.JsFile = JsFile;</code>
+            </div>
+          </section>
+
+          <section>
+            <h2>
+              How great?
+            </h2>
+            <div class="align-left">
+              <code class="javascript block small">
+export class JsFile extends InputFile {
+  addJavaScript({ data, sourceMap, path }) {
+    this._minifiedFiles.push({ data, sourceMap, path });
+  }
+}</code>
+            </div>
+          </section>
         </section>
 
         <section data-background="img/wires.jpg">
