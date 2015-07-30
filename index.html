@@ -824,10 +824,209 @@ for (let index in runtime.sanitizeForInObject(sparseArray)) {
           </p>
         </section>
 
-        <section>
+        <section class="fixed-height">
           <h2>
-            Example: <code>Promise</code> that works with <code>Fiber</code>s
+            Example: <code class="fragment">Promise</code><code class="fragment">.Fiber</code>
           </h2>
+          <code class="javascript block small fragment">
+// Replace Promise.prototype.then with a wrapper that ensures the
+// onResolved and onRejected callbacks always run in a Fiber.
+var es6PromiseThen = Promise.prototype.then;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </code>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Example: <code>Promise.Fiber</code>
+          </h2>
+          <code class="javascript block small">
+// Replace Promise.prototype.then with a wrapper that ensures the
+// onResolved and onRejected callbacks always run in a Fiber.
+var es6PromiseThen = Promise.prototype.then;
+
+Promise.prototype.then = function then(onResolved, onRejected) {
+
+
+
+
+
+
+
+
+
+
+
+};
+          </code>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Example: <code>Promise.Fiber</code>
+          </h2>
+          <code class="javascript block small">
+// Replace Promise.prototype.then with a wrapper that ensures the
+// onResolved and onRejected callbacks always run in a Fiber.
+var es6PromiseThen = Promise.prototype.then;
+
+Promise.prototype.then = function then(onResolved, onRejected) {
+  var Promise = this.constructor;
+
+
+
+
+
+
+
+
+
+
+};
+          </code>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Example: <code>Promise.Fiber</code>
+          </h2>
+          <code class="javascript block small">
+// Replace Promise.prototype.then with a wrapper that ensures the
+// onResolved and onRejected callbacks always run in a Fiber.
+var es6PromiseThen = Promise.prototype.then;
+
+Promise.prototype.then = function then(onResolved, onRejected) {
+  var Promise = this.constructor;
+
+  if (typeof Promise.Fiber === "function") {
+
+
+
+
+
+  }
+
+
+};
+          </code>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Example: <code>Promise.Fiber</code>
+          </h2>
+          <code class="javascript block small">
+// Replace Promise.prototype.then with a wrapper that ensures the
+// onResolved and onRejected callbacks always run in a Fiber.
+var es6PromiseThen = Promise.prototype.then;
+
+Promise.prototype.then = function then(onResolved, onRejected) {
+  var Promise = this.constructor;
+
+  if (typeof Promise.Fiber === "function") {
+    return es6PromiseThen.call(
+      this,
+      wrapCallback(onResolved, Promise),
+      wrapCallback(onRejected, Promise)
+    );
+  }
+
+
+};
+          </code>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Example: <code>Promise.Fiber</code>
+          </h2>
+          <code class="javascript block small">
+// Replace Promise.prototype.then with a wrapper that ensures the
+// onResolved and onRejected callbacks always run in a Fiber.
+var es6PromiseThen = Promise.prototype.then;
+
+Promise.prototype.then = function then(onResolved, onRejected) {
+  var Promise = this.constructor;
+
+  if (typeof Promise.Fiber === "function") {
+    return es6PromiseThen.call(
+      this,
+      wrapCallback(onResolved, Promise),
+      wrapCallback(onRejected, Promise)
+    );
+  }
+
+  return es6PromiseThen.call(this, onResolved, onRejected);
+};
+          </code>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Example: <code>Promise.Fiber</code>
+          </h2>
+          <code class="javascript block small">
+function wrapCallback(callback, Promise) {
+  var fiber = Promise.Fiber.current;
+  var dynamics = fiber && fiber._meteorDynamics;
+
+  return callback && function (arg) {
+    return fiberPool.run({
+      callback: callback,
+      args: [arg], // Avoid dealing with arguments objects.
+      dynamics: dynamics
+    }, Promise);
+  };
+}
+          </code>
+          <p class="fragment">
+            <code>Fiber</code>s are recycled using a
+            <a target="_blank"
+               href="https://github.com/meteor/promise/blob/master/fiber_pool.js">pool</a>,
+            so a new <code>Fiber</code> does not have to be created
+            every time a <code>Promise</code> callback fires.
+          </p>
+        </section>
+
+        <section class="fixed-height">
+          <h2>
+            Example: <code>Promise.Fiber</code>
+          </h2>
+          <code class="javascript block small">
+function wrapCallback(callback, Promise) {
+  var fiber = Promise.Fiber.current;
+  var dynamics = fiber && fiber._meteorDynamics;
+
+  return callback && function (arg) {
+    return fiberPool.run({
+      callback: callback,
+      args: [arg], // Avoid dealing with arguments objects.
+      dynamics: dynamics
+    }, Promise);
+  };
+}
+          </code>
+          <p>
+            Even better,
+            <span class="fragment"><code>Fiber._meteorDynamics</code> is
+            saved and restored when the callback
+            runs,</span><span class="fragment"> so you never have to
+            call <code>Meteor.bindEnvironment</code> with
+            <code>Promise</code>s.</span>
+          </p>
         </section>
 
         <section class="fixed-height">
