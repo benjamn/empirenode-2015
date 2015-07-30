@@ -514,7 +514,7 @@ export class JsFile extends InputFile {
 
         <section>
           <h2>
-            But how?
+            How?
           </h2>
           <br>
           <code class="bash fragment">meteor add ecmascript</code>
@@ -529,7 +529,7 @@ export class JsFile extends InputFile {
 
         <section>
           <h2>
-            So what dialect of JavaScript will Meteor implement?
+            So what dialect of JavaScript does Meteor implement?
           </h2>
           <br>
           <p class="fragment">
@@ -568,7 +568,7 @@ export class JsFile extends InputFile {
           </ol>
           <br><br>
           <p class="fragment">
-            Code you write in the first stage should not need to be
+            Code you write in the first stage should not have to be
             rewritten when the second stage arrives.
           </p>
         </section>
@@ -737,8 +737,8 @@ for (let index in sparseArray) {
             </code>
           </div>
           <p class="fragment">
-            Normally you would be out of luck, but since Meteor controls
-            the compilation of all your code, we can actually fix this!
+            Normally you would be out of luck<span class="fragment">, but
+            Meteor can actually fix this for you.</span>
           </p>
         </section>
 
@@ -764,8 +764,8 @@ for (let index in runtime.sanitizeForInObject(sparseArray)) {
             </code>
           </div>
           <p>
-            Normally you would be out of luck, but since Meteor controls
-            the compilation of all your code, we can actually fix this!
+            Normally you would be out of luck, but Meteor can actually fix
+            this for you.
           </p>
         </section>
 
@@ -820,7 +820,7 @@ for (let index in runtime.sanitizeForInObject(sparseArray)) {
           <p>
             In IE8, <span class="fragment">when the argument is an
             array, </span><span class="fragment">it returns a new object
-            containing only the keys that should be enumerated.</span>
+            containing only the enumerable keys.</span>
           </p>
         </section>
 
@@ -846,12 +846,12 @@ for (let index in runtime.sanitizeForInObject(sparseArray)) {
             using the latest ECMAScript features.
           </p>
           <p class="fragment">
-            Nor should you to have to worry about when it's safe to
-            transition from simulated to native support.
+            Nor should you to have to wonder when it's safe to transition
+            from simulated to native support.
           </p>
           <p class="fragment">
-            Nor should you to have to worry about the best way to
-            integrate libraries like <code>es5-shim</code> with tools like
+            Nor should you to have to find the best way to integrate
+            libraries like <code>es5-shim</code> with tools like
             <a target="_blank"
                href="https://babeljs.io">Babel</a><span class="fragment">,
             especially when the difference is only apparent in IE8!</span>
@@ -875,8 +875,8 @@ for (let index in runtime.sanitizeForInObject(sparseArray)) {
 
         <section>
           <h2>
-            That<span class="fragment">, more than
-            anything</span><span class="fragment">, is why I left my job
+            That, <span class="fragment">more than
+            anything, </span><span class="fragment">is why I left my job
             at Facebook</span>
           </h2>
           <br>
