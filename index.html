@@ -588,16 +588,15 @@ for (let x of arrayOfNumbers) {
               gets transpiled to
             </p>
             <code class="javascript block small fragment">
-let sum = 0;
-let _iter = arrayOfNumbers[Symbol.iterator](), _result;
+var sum = 0;
+var _iter = arrayOfNumbers[Symbol.iterator](), _result;
 while (! (_result = _iter.next()).done) {
-  let x = _result.value;
+  var x = _result.value;
   sum += x;
 }</code>
             <p class="fragment">
               <code>Symbol.iterator</code> is a special kind of unique
-              property name that cannot be simulated
-              faithfully<span class="fragment">, so we cheat!</span>
+              property name that cannot be simulated faithfully.
             </p>
           </section>
 
@@ -606,10 +605,10 @@ while (! (_result = _iter.next()).done) {
               Example: <code>for</code>-<code>of</code> loops
             </h2>
             <code class="javascript block small">
-let sum = 0;
-let _iter = arrayOfNumbers[Symbol.iterator](), _result;
+var sum = 0;
+var _iter = arrayOfNumbers[Symbol.iterator](), _result;
 while (! (_result = _iter.next()).done) {
-  let x = _result.value;
+  var x = _result.value;
   sum += x;
 }</code>
             <p class="fragment">
@@ -632,10 +631,10 @@ if (typeof Symbol === "undefined") {
               Example: <code>for</code>-<code>of</code> loops
             </h2>
             <code class="javascript block small">
-let sum = 0;
-let _iter = arrayOfNumbers[Symbol.iterator](), _result;
+var sum = 0;
+var _iter = arrayOfNumbers[Symbol.iterator](), _result;
 while (! (_result = _iter.next()).done) {
-  let x = _result.value;
+  var x = _result.value;
   sum += x;
 }</code>
             <p>
@@ -658,10 +657,10 @@ if (! Symbol.iterator) {
               Example: <code>for</code>-<code>of</code> loops
             </h2>
             <code class="javascript block small">
-let sum = 0;
-let _iter = arrayOfNumbers[Symbol.iterator](), _result;
+var sum = 0;
+var _iter = arrayOfNumbers[Symbol.iterator](), _result;
 while (! (_result = _iter.next()).done) {
-  let x = _result.value;
+  var x = _result.value;
   sum += x;
 }</code>
             <p>
