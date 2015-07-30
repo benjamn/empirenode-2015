@@ -56,13 +56,13 @@
         <section>
           <h2>
             Have you ever tried describing Meteor
-            <span class="fragment">without mentioning <em>JavaScript</em>?</span>
+            <span class="fragment">without mentioning JavaScript?</span>
           </h2>
         </section>
 
         <section>
           <h2>
-            The <em class="fragment">JavaScript</em> App Platform
+            The <span class="fragment">JavaScript</span> App Platform
           </h2>
         </section>
 
@@ -70,14 +70,14 @@
           <h2>
             Meteor is a complete open source platform
             <span class="fragment">for building web and mobile apps</span>
-            <span class="fragment">in <em>pure JavaScript</em></span>
+            <span class="fragment">in pure JavaScript</span>
           </h2>
         </section>
 
         <section>
           <h2>
             What are we talking about<span class="fragment"><br>when we talk
-            about <em>JavaScript</em>?</span>
+            about JavaScript?</span>
           </h2>
         </section>
 
@@ -156,10 +156,10 @@
           </h2>
           <br>
           <p class="fragment">
-            A vast audience of programmers still know it by that name.
-          </p>
-          <p class="fragment">
-            And that's why we keep using it.
+            Even if it's a little vague<span class="fragment">, a vast
+            audience of programmers still know it by that
+            name</span><span class="fragment">, and that's why we keep
+            using it.</span>
           </p>
         </section>
 
@@ -167,19 +167,26 @@
           <h2>
             But programming languages<br>
             can change<span class="fragment">,
-            and JavaScript is changing faster than ever</span>
+            and JavaScript is changing faster than ever!</span>
           </h2>
         </section>
 
         <section>
-          <h2>
-            Easier than ever to propose new language
+          <h3>
+            Now easier than ever to propose new language
             features<span class="fragment">, build consensus around
             <a target="_blank"
                href="https://github.com/tc39/ecma262/blob/master/README.md">those
             proposals</a></span><span class="fragment">, and get them
             implemented.</span>
-          </h2>
+          </h3>
+          <br>
+          <p class="fragment">
+            <code>RegExp.escape</code> revived on
+            <a target="_blank"
+            href="https://esdiscuss.org/topic/regexp-escape"><code>es-discuss</code></a>
+            last month, presented in this week's TC39 meeting.
+          </p>
         </section>
 
         <section>
@@ -513,9 +520,10 @@ export class JsFile extends InputFile {
           <code class="bash fragment">meteor add ecmascript</code>
           <br><br>
           <p class="fragment">
-            Just a package that can be added to any app or
-            package<span class="fragment">, and it will be installed by
-            default for all new apps and packages.</span>
+            Just a package that can be added to any
+            app<br><span class="fragment"> or <code>api.use</code>d by any
+            package</span><span class="fragment">, and it will be
+            installed by default for all new apps and packages.</span>
           </p>
         </section>
 
@@ -525,8 +533,9 @@ export class JsFile extends InputFile {
           </h2>
           <br>
           <p class="fragment">
-            The latest one:<span class="fragment"> ECMAScript
-            2015</span><span class="fragment">+</span>
+            Easy!<span class="fragment"> The latest
+            one:</span><strong class="fragment"> ECMAScript
+            2015</strong><span class="fragment">+</span>
           </p>
         </section>
 
@@ -554,7 +563,7 @@ export class JsFile extends InputFile {
               <br><br>
             </li>
             <li class="fragment">
-              Native support catches up with the simulation.
+              Native support catches up to the simulation.
             </li>
           </ol>
           <br><br>
@@ -564,7 +573,7 @@ export class JsFile extends InputFile {
           </p>
         </section>
 
-        <section>
+        <section class="fixed-height">
           <section>
             <h2>
               Example: <span class="fragment"><code>for</code>-<code>of</code>
@@ -701,8 +710,9 @@ if (! Symbol.iterator) {
             We use a popular polyfill library called
             <a target="_blank"
                href="https://github.com/es-shims/es5-shim"><code>es5-shim</code></a>
-            to implement the methods<span class="fragment">, but there
-            is no way to define them as <em>non-enumerable</em> in IE8.</span>
+            to implement these methods<span class="fragment">, but
+            there is no way to make them <em>non-enumerable</em>
+            in IE8.</span>
           </p>
         </section>
 
@@ -724,7 +734,8 @@ sparseArray[2] = "c";
 
 for (let index in sparseArray) {
   console.log(index); // Should log 0 and 2.
-}</code>
+}
+            </code>
           </div>
           <p class="fragment">
             Normally you would be out of luck, but since Meteor controls
@@ -750,7 +761,8 @@ sparseArray[2] = "c";
 
 for (let index in runtime.sanitizeForInObject(sparseArray)) {
   console.log(index); // Should log 0 and 2.
-}</code>
+}
+            </code>
           </div>
           <p>
             Normally you would be out of luck, but since Meteor controls
@@ -776,11 +788,12 @@ sparseArray[2] = "c";
 
 for (let index in runtime.sanitizeForInObject(sparseArray)) {
   console.log(index); // Should log 0 and 2.
-}</code>
+}
+            </code>
           </div>
           <p>
-            The <code>sanitizeForInObject</code> helper usually just
-            returns its argument unmodified.
+            In most browsers, the <code>sanitizeForInObject</code> helper
+            function simply returns its argument.
           </p>
         </section>
 
@@ -802,12 +815,13 @@ sparseArray[2] = "c";
 
 for (let index in runtime.sanitizeForInObject(sparseArray)) {
   console.log(index); // Should log 0 and 2.
-}</code>
+}
+            </code>
           </div>
           <p>
-            Except in IE8, when the argument is an array, and then it
-            returns a new object containing only the keys that should be
-            enumerable.
+            In IE8, <span class="fragment">when the argument is an
+            array, </span><span class="fragment">it returns a new object
+            containing only the keys that should be enumerated.</span>
           </p>
         </section>
 
