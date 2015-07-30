@@ -16,7 +16,7 @@
 }
 
 .reveal code {
-  white-space: pre-wrap;
+  white-space: pre;
   text-align: left;
   display: inline;
 }
