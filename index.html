@@ -170,6 +170,18 @@
         </section>
 
         <section>
+          <h2>
+            ECMAScript <span class="fragment">2015</span>
+          </h2>
+          <br>
+          <p class="fragment">
+            A big departure from sequential numbering (ECMAScript 4, 5,
+            6), <span class="fragment">since it signals an intention to
+            release a new standard every year.</span>
+          </p>
+        </section>
+
+        <section>
           <h3>
             Now easier than ever to propose new language
             features,<span class="fragment"> build consensus around
@@ -184,6 +196,65 @@
             <a target="_blank"
             href="https://esdiscuss.org/topic/regexp-escape"><code>es-discuss</code></a>
             last month, presented in this week's TC39 meeting.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Multiple levels of implementation:
+          </h2>
+          <br>
+          <ol>
+            <li class="fragment">
+              transpilers
+              (<a target="_blank"
+                  href="https://github.com/google/traceur-compiler">Traceur</a>,
+              <a target="_blank"
+                 href="https://babeljs.io">Babel</a>)
+            </li>
+            <li class="fragment">
+              native support in Node
+            </li>
+            <li class="fragment">
+              native support in (some) browsers
+            </li>
+            <li class="fragment">
+              native support everywhere
+            </li>
+          </ol>
+        </section>
+
+        <section>
+          <h2>
+            Two kinds of progress:
+          </h2>
+          <br>
+          <ol>
+            <li class="fragment">
+              Meteor provides simulated support for features not yet
+              implemented natively in all JavaScript engines.
+              <br><br>
+            </li>
+            <li class="fragment">
+              Native support catches up to the simulation.
+            </li>
+          </ol>
+          <br><br>
+          <p class="fragment">
+            Code you write in the first stage should not have to be
+            rewritten when the second stage arrives.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Our commitment:
+          </h2>
+          <br>
+          <p class="fragment">
+            The <code>ecmascript</code> package will provide any and all
+            language features that can be faithfully compiled to code that
+            runs natively in all JavaScript engines.
           </p>
         </section>
 
@@ -525,6 +596,16 @@ export class JsFile extends InputFile {
           </p>
         </section>
 
+        <section class="external_iframe">
+          <h2>
+            With many thanks to
+            <a target="_blank"
+               href="https://babeljs.io/">Babel</a>
+          </h2>
+          <iframe class="fragment"
+                  src="https://babeljs.io/"></iframe>
+        </section>
+
         <section>
           <h2>
             So what dialect of JavaScript does Meteor implement?
@@ -534,39 +615,14 @@ export class JsFile extends InputFile {
             The latest one: <strong class="fragment">ECMAScript
             2015</strong><span class="fragment">+</span>
           </p>
-        </section>
-
-        <section>
-          <h2>
-            Our commitment:
-          </h2>
-          <br>
           <p class="fragment">
-            The <code>ecmascript</code> package will provide any and all
-            language features that can be faithfully compiled to code that
-            runs natively in all JavaScript engines.
+            Whatever we can faithfully transpile.
           </p>
-        </section>
-
-        <section>
-          <h2>
-            Two kinds of progress:
-          </h2>
-          <br>
-          <ol>
-            <li class="fragment">
-              Meteor provides simulated support for features not yet
-              implemented natively in all JavaScript engines.
-              <br><br>
-            </li>
-            <li class="fragment">
-              Native support catches up to the simulation.
-            </li>
-          </ol>
-          <br><br>
           <p class="fragment">
-            Code you write in the first stage should not have to be
-            rewritten when the second stage arrives.
+            Whatever will one day be implemented natively.
+          </p>
+          <p class="fragment">
+            Whatever helps you write Meteor apps.
           </p>
         </section>
 
@@ -1055,7 +1111,7 @@ function wrapCallback(callback, Promise) {
           </h2>
           <br>
           <p class="fragment">
-            You shouldn't have to wait for native support before you start
+            You shouldn't have to wait for universal native support before
             using the latest ECMAScript features.
           </p>
           <p class="fragment">
@@ -1063,15 +1119,14 @@ function wrapCallback(callback, Promise) {
             from simulated to native support.
           </p>
           <p class="fragment">
-            Nor should you to have to find the best way to integrate
-            libraries like <code>es5-shim</code> with tools like
-            <a target="_blank" href="https://babeljs.io">Babel</a>.
+            Nor should it be your job to find the best way to integrate
+            libraries like <code>es5-shim</code> with tools like Babel.
           </p>
         </section>
 
         <section>
           <h2>
-            The Meteor advantage
+            Meteor can be the place where these solutions accumulate
           </h2>
           <br>
           <p class="fragment">

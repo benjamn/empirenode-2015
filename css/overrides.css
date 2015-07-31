@@ -10,7 +10,7 @@
   bottom: 25px;
 }
 
-.reveal div.align-left {
+.reveal .align-left {
   text-align: left;
   padding-left: 15%;
 }
