@@ -16,13 +16,17 @@
 }
 
 .reveal code {
-  white-space: pre;
+  white-space: pre-wrap;
   text-align: left;
   display: inline;
 }
 
 .reveal code.block {
   display: inline-block;
+}
+
+.reveal code.medium {
+  font-size: 32px;
 }
 
 .reveal code.small,
