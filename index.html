@@ -685,11 +685,10 @@ export function ensureTrailingNewline(path, callback) {
           Example: Babel transpilation
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p class="fragment">
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -713,11 +712,10 @@ export default function a() {...}
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -741,11 +739,10 @@ import a from "./abc";
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -753,7 +750,34 @@ import a from "./abc";
           <div class="align-left">
             <code class="javascript block small">
 // In abc.js:
-export default function a() {...}
+export default function () {...}
+
+
+
+// In d.js:
+import a from "./abc";
+
+
+
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section class="full_height">
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function () {...}
 
 
 
@@ -769,11 +793,10 @@ import a1 from "./abc";
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -781,7 +804,7 @@ import a1 from "./abc";
           <div class="align-left">
             <code class="javascript block small">
 // In abc.js:
-export default function a() {...}
+export default function () {...}
 export function b() {...}
 
 
@@ -797,11 +820,10 @@ import a1 from "./abc";
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -809,42 +831,14 @@ import a1 from "./abc";
           <div class="align-left">
             <code class="javascript block small">
 // In abc.js:
-export default function a() {...}
-export function b() {...}
-export const c = 299792458;
-
-// In d.js:
-import a from "./abc";
-import a1 from "./abc";
-
-
-
-
-
-            </code>
-          </div>
-        </section>
-
-        <section>
-          <h2>
-            What about <code class="javascript">module.exports</code>?
-          </h2>
-          <br>
-          <p>
-            ES2015 modules can define
-            a <code class="javascript">default</code> exported value:
-          </p>
-          <div class="align-left">
-            <code class="javascript block small">
-// In abc.js:
-export default function a() {...}
+export default function () {...}
 export function b() {...}
 export const c = 299792458;
 
 // In d.js:
 import a from "./abc";
 import a1 from "./abc";
-import {b, c} from "./abc";
+
 
 
 
@@ -853,11 +847,10 @@ import {b, c} from "./abc";
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -865,7 +858,7 @@ import {b, c} from "./abc";
           <div class="align-left">
             <code class="javascript block small">
 // In abc.js:
-export default function a() {...}
+export default function () {...}
 export function b() {...}
 export const c = 299792458;
 
@@ -873,7 +866,7 @@ export const c = 299792458;
 import a from "./abc";
 import a1 from "./abc";
 import {b, c} from "./abc";
-import {b as bee, c as lightSpeed} from "./abc";
+
 
 
 
@@ -881,11 +874,10 @@ import {b as bee, c as lightSpeed} from "./abc";
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -893,7 +885,7 @@ import {b as bee, c as lightSpeed} from "./abc";
           <div class="align-left">
             <code class="javascript block small">
 // In abc.js:
-export default function a() {...}
+export default function () {...}
 export function b() {...}
 export const c = 299792458;
 
@@ -902,18 +894,17 @@ import a from "./abc";
 import a1 from "./abc";
 import {b, c} from "./abc";
 import {b as bee, c as lightSpeed} from "./abc";
-import {default as a2} from "./abc";
+
 
 
             </code>
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -921,7 +912,7 @@ import {default as a2} from "./abc";
           <div class="align-left">
             <code class="javascript block small">
 // In abc.js:
-export default function a() {...}
+export default function () {...}
 export function b() {...}
 export const c = 299792458;
 
@@ -931,17 +922,16 @@ import a1 from "./abc";
 import {b, c} from "./abc";
 import {b as bee, c as lightSpeed} from "./abc";
 import {default as a2} from "./abc";
-import {default as a3, b, c} from "./abc";
+
 
             </code>
           </div>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>
             What about <code class="javascript">module.exports</code>?
           </h2>
-          <br>
           <p>
             ES2015 modules can define
             a <code class="javascript">default</code> exported value:
@@ -949,7 +939,7 @@ import {default as a3, b, c} from "./abc";
           <div class="align-left">
             <code class="javascript block small">
 // In abc.js:
-export default function a() {...}
+export default function () {...}
 export function b() {...}
 export const c = 299792458;
 
@@ -960,13 +950,136 @@ import {b, c} from "./abc";
 import {b as bee, c as lightSpeed} from "./abc";
 import {default as a2} from "./abc";
 import {default as a3, b, c} from "./abc";
-import a3, {b, c} from "./abc";
+
             </code>
           </div>
+        </section>
+
+        <section class="full_height">
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function () {...}
+export function b() {...}
+export const c = 299792458;
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+import {b, c} from "./abc";
+import {b as bee, c as lightSpeed} from "./abc";
+import {default as a2} from "./abc";
+import {default as a3, b, c} from "./abc";
+import a4, {b, c} from "./abc";
+            </code>
+          </div>
+          <p class="fragment">
+            Default and named exports, together at last!
+          </p>
         </section>
 
         <section>
           Example: Babel transpilation
+        </section>
+
+        <section>
+          <h2>
+            The ES2015 module system enforces the very discipline I
+            mentioned earlier, <span class="fragment">so that it doesn't
+            have to be <em>self</em>-discipline.</span>
+          </h2>
+          <br>
+          <p class="fragment">
+            And, if you're anything like me, that makes all the
+            difference.
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Multiple exports?</h2>
+          <p class="fragment">
+            ES2015 <code class="javascript">export</code> statements must
+            appear only at the top level of a
+            module, <span class="fragment">and must have one of the
+            following forms</span><span class="fragment">&mdash;all of
+            which include a name:</span>
+          </p>
+          <ul>
+            <li class="fragment">
+              <code class="javascript medium">export var a = ...;</code>
+            </li>
+            <li class="fragment">
+              <code class="javascript medium">export let b = ...;</code>
+            </li>
+            <li class="fragment">
+              <code class="javascript medium">export const c = ...;</code>
+            </li>
+            <li class="fragment">
+              <code class="javascript medium">export function d() {...}</code>
+            </li>
+            <li class="fragment">
+              <code class="javascript medium">export function* e() {...}</code>
+            </li>
+            <li class="fragment">
+              <code class="javascript medium">export class F {...}</code>
+            </li>
+            <li class="fragment">
+              <code class="javascript medium">export default <em>expression</em>;</code>
+            </li>
+            <li class="fragment">
+              <code class="javascript medium">export {a, b, c, d, e as genFn, F};</code>
+            </li>
+          </ul>
+        </section>
+
+        <section class="full_height">
+          <h2>Multiple exports?</h2>
+          <p class="fragment">
+            ES2015 <code class="javascript">import</code> statements
+            provide no way to obtain the <code>exports</code> object
+            itself.
+          </p>
+          <p class="fragment">
+            In fact, there's no reason an implementation of ES2015 modules
+            needs to represent exports using an object.
+          </p>
+          <p class="fragment">
+            That's just an implementation detail that happens to be
+            convenient if you're compiling for an environment that
+            supports CommonJS.
+          </p>
+          <p class="fragment">
+            This makes it possible to determine, statically, for any form
+            of <code class="javascript">import</code> statement, exactly
+            which exports it does and doesn't care about.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Detailed
+            <a href="http://www.2ality.com/2014/09/es6-modules-final.html"
+               target="_blank">explanation</a> by <a target="_blank"
+               href="https://twitter.com/rauschma">Axel Rauschmayer</a> of
+               every variation of <code class="javascript">import</code>
+               and <code class="javascript">export</code> syntax.
+          </h2>
+        </section>
+
+        <section class="external_iframe">
+          <h2>
+            <a target="_blank" href="http://rollupjs.org/">Rollup</a>
+            <span class="fragment">(<a target="_blank"
+                href="https://twitter.com/Rich_Harris">Rich Harris</a>)</span>
+          </h2>
+          <iframe class="fragment"src="http://rollupjs.org"></iframe>
         </section>
 
         <!--<section>
@@ -994,25 +1107,6 @@ import a3, {b, c} from "./abc";
         </section>-->
 
         <section>
-          Can ECMAScript 2015 modules solve these problems?
-          <p class="fragment">
-            Why yes! And how!
-          </p>
-        </section>
-
-        <section>
-          All the other module formats are just trying to get CommonJS to
-          work in the browser. None of them claim to solve any of these
-          problems. It's no longer an arbitrary choice between equivalent
-          alternatives. The contest is over. A thousand flowers bloomed
-          and then died, and with good reason.
-        </section>
-
-        <section>
-          Why not just <code>require</code> + destructuring?
-        </section>
-
-        <section>
           How exciting could <code class="javascript">import</code>
           and <code class="javascript">export</code> be if they can just
           be compiled to <code class="javascript">require</code>
@@ -1032,18 +1126,10 @@ import a3, {b, c} from "./abc";
         </section>
 
         <section>
-          Default and named exports, together at last!
-        </section>
-
-        <section>
           Statically analyzable by design
           <p class="fragment">
             The source expression is always a string literal.
           </p>
-        </section>
-
-        <section>
-          Rollup
         </section>
 
         <section>
