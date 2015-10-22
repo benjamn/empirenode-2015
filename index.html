@@ -64,6 +64,1036 @@ export {slides as default} from
           </code>
         </section>
 
+        <section>
+          <h2>Let's talk about <code class="fragment javascript">eval</code></h2>
+          <p class="fragment">
+            Its mere presence thwarts almost any kind of optimization or
+            static analysis.
+          </p>
+          <p class="fragment">
+            Most JavaScript programmers I know consider it more harmful
+            than <code>goto</code>.
+          </p>
+          <p class="fragment">
+            Heaven forbid a snippet of user input should end up in one of
+            those strings!
+          </p>
+          <p class="fragment">
+            Transpilers like Babel take hardly any pains to support it.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Aside: <span class="fragment">how could
+              <code class="javascript">eval</code> support ES2015?</span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            As a community we have decided
+            <span class="fragment">it is never acceptable to
+            use <code class="javascript">eval</code>
+            <span class="fragment"> when there is <em>any other way</em>
+            to solve the problem.</span>
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            And yet <span class="fragment">we
+            use <code class="javascript">eval</code> all the time!</span>
+          </h2>
+          <p class="fragment">
+            Of course it goes by different names:<br>
+            <ul>
+              <li class="fragment">
+                <code class="xml">&lt;script src="http://..."&gt;&lt;/script&gt;</code><br>
+              </li>
+              <li class="fragment">
+                <code class="xml">&lt;script&gt;...&lt;/script&gt;</code><br>
+              </li>
+              <li class="fragment">
+                <code>vm.runInThisContext("...")</code><br>
+              </li>
+              <li class="fragment">
+                <code class="xml">&lt;a href="javascript:..."&gt;click me!&lt;/a&gt;</code><br>
+              </li>
+              <li class="fragment">
+                <code class="javascript">setTimeout("...", 1000)</code>
+              </li>
+          </p>
+
+        </section>
+
+        <section>
+          <h2>
+            Nothing happens
+          </h2>
+          <h2 class="fragment">
+            unless first
+            <span class="fragment">an <code class="javascript">eval</code>.</span>
+          </h2>
+          <br>
+          <p class="fragment">
+            <em style="float:right">Carl Sandburg</em>
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            There is a<span class="fragment">n <code class="javascript">eval</code>
+            in everything.</span><br>
+          </h2>
+          <h2 class="fragment">
+            That's how <span class="fragment">the code gets in.</span>
+          </h2>
+          <br>
+          <p class="fragment">
+            <em style="float:right">Leonard Cohen</em>
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            There's no escaping <code class="javascript">eval</code>
+          </h2>
+          <br>
+          <p class="fragment">
+            But it can be tamed, <span class="fragment">and Node does this
+            better than any other JavaScript platform,</span>
+            <span class="fragment">thanks to <strong>CommonJS</strong>.</span>
+          </p>
+        </section>
+
+        <section>
+          <h2>CommonJS is great</h2>
+          <ul>
+            <li class="fragment">
+              All code runs in a specific module scope.
+            </li>
+            <li class="fragment">
+              Any given module runs at most
+              once, <span class="fragment">the first time
+              you <code>require</code> it.</span>
+            </li>
+            <li class="fragment">
+              Module source code is loaded from static files, <span class="fragment">according to
+              <a target="_blank"
+              href="https://nodejs.org/api/modules.html#modules_modules">simple
+              rules</a>.</span>
+            </li>
+            <li class="fragment">
+              Module load order emerges naturally.
+            </li>
+            <li class="fragment">
+              Module <code>exports</code> remain distinct.
+            </li>
+            <li class="fragment">
+              Global scope stays clean.
+            </li>
+          </ul>
+          <br>
+          <p class="fragment">
+            Once your code starts
+            running, <span class="fragment"><em>you</em> get to make all
+            the decisions about what additional code is allowed to run,
+            <span class="fragment">and when.</span>
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Has CommonJS won?
+          </h2>
+          <br>
+          <p class="fragment">
+            From the perspective of Node and NPM,<br>
+            <span class="fragment">it certainly seems so.</span>
+          </p>
+          <p class="fragment">
+            But what about code running in browsers?
+          </p>
+          <p class="fragment">
+            Is "winning" really all we care about?
+          </p>
+        </section>
+
+        <section>
+          <h1>What's wrong with CommonJS?</h1>
+        </section>
+
+        <section>
+          <h2>How code is loaded</h2>
+          <br>
+          <p class="fragment">
+            Node has it easy. <span class="fragment">Just ask the file
+            system!</span>
+          </p>
+          <p class="fragment">
+            Not so simple or efficient to do hundreds of synchronous HTTP
+            requests over the network.
+          </p>
+          <p class="fragment">
+            Instead, there has to be a way to deliver <em>bundles</em> of
+            code to the client.<span class="fragment">*</span>
+          </p>
+          <br>
+          <p class="fragment">
+            <em>* A topic that deserves a talk of its own!</em>
+          </p>
+        </section>
+
+        <section>
+          <h2>Circular dependencies</h2>
+        </section>
+
+        <section>
+          <h2>Example: load order brittleness</h2>
+        </section>
+
+        <section>
+          <h2>Parable: <code>ReactID</code> + <code>ReactMount</code></h2>
+          <p class="fragment">
+            You might think you can just forbid circular dependencies...
+          </p>
+          <a href="https://github.com/facebook/react/commit/2ee66262db9fb91b0d0e9d64cefeb223074f8e05?diff=split"
+             class="fragment" target="_blank">commit</a>
+          <p class="fragment">
+            Sacrificing modularity in order to tame the circular hydra
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            <code class="javascript">exports</code> vs.
+            <code class="javascript">module.exports</code>
+          </h2>
+          <p class="fragment">
+            Immediately returning a partially populated
+            <code class="javascript">exports</code> object in case of
+            circular dependencies would work so much better if
+            that <code class="javascript">exports</code> object was
+            guaranteed to become complete eventually.
+          </p>
+          <p class="fragment">
+            But modules can change the very identity of
+            <code class="javascript">exports</code> by reassigning
+            the <code class="javascript">module.exports</code> property,
+            <span class="fragment">rendering that partial
+            <code class="javascript">exports</code> object not only
+            incomplete but also totally irrelevant.</span>
+          </p>
+          <p class="fragment">
+            Different modules that <code>require</code> the same module
+            can end up with totally unrelated results!
+          </p>
+        </section>
+
+        <section>
+          <h2>Multiple exports</h2>
+          <br>
+          <p class="fragment">
+            It's nice that <code class="javascript">exports</code> objects
+            can have multiple properties.
+          </p>
+          <p class="fragment">
+            But it's nearly impossible to determine whether a certain
+            property is never actually used.
+          </p>
+          <p class="fragment">
+            Not a huge problem on the server, but client bundlers like
+            <a target="_blank"
+               href="http://browserify.org">Browserify</a> and
+            <a target="_blank"
+               href="https://webpack.github.io">Webpack</a> end up
+            including tons of dead code.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            Self-discipline?
+          </h2>
+          <ul>
+            <li class="fragment">
+              Never assign to
+              <code class="javascript">module.exports</code>,
+              <span class="fragment">unless you are certain your module
+              has no (circular) dependencies.</span>
+            </li>
+            <li class="fragment">
+              Store references to imported <code>exports</code> objects:
+              <code class="javascript block small">
+var a = require("a"); // Mostly safe.
+var foo = require("a").foo; // Dangerous!
+
+exports.good = function (arg) {
+  return a.foo("good", arg); // Uses the latest value of a.foo.
+};
+
+exports.bad = function (arg) {
+  return foo("bad", arg); // Uses a stale value.
+};</code>
+            </li>
+          </ul>
+          <p class="fragment">
+            There's nothing about CommonJS that helps you (or your
+            teammates) keep this discipline.
+          </p>
+        </section>
+
+        <section>
+          <p>
+            CommonJS may be the most popular module system for
+            JavaScript, <span class="fragment">but it's a shame that we're
+            even talking about one module system winning a popularity
+            contest.</span>
+          </p>
+          <br>
+          <p class="fragment">
+            Almost every other language avoids this contest entirely,
+            <span class="fragment">by providing <strong>a built-in module
+            system</strong>,</span> <span class="fragment"> and most of
+            them do it with a special syntax.</span>
+          </p>
+        </section>
+
+        <section>
+          <h2>A native module system...</h2>
+          <br>
+          <ul>
+            <li class="fragment">
+              eases cooperation between authors and consumers of libraries,
+            </li>
+            <li class="fragment">
+              eliminates the need for each library to provide its own
+              module-loading system,
+            </li>
+            <li class="fragment">
+              regularizes the structure of applications, and
+            </li>
+            <li class="fragment">
+              allows the developer community to stop debating the merits of different
+              code sharing mechanisms.
+              <br><br>
+            </li>
+            <li class="fragment" style="list-style-type:none">
+              <strong class="blink">
+                <code class="xml">&lt;blink&gt;</code><br>
+                <code>  </code>We have more interesting problems to solve!<br>
+                <code class="xml">&lt;/blink&gt;</code>
+              </strong>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <h3>
+            A language without a native module system is a language in
+            which no one is ever quite sure how to share their code with the
+            widest possible audience.
+          </h3>
+          <br>
+          <p class="fragment">
+            Betting on the wrong best practice (CommonJS? AMD? UMD?) is a
+            recipe for obscurity, while reverting to the simplest common
+            denominator (global variables) feels like giving up.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            And that's why the new ECMAScript 2015
+            <code class="javascript">import</code>
+            and <code class="javascript">export</code> statements are so
+            important.
+          </h2>
+        </section>
+
+        <section>
+          <h2>
+            A native module system would be a huge relief even if it had
+            fewer features than CommonJS
+          </h2>
+          <br>
+          <p class="fragment">
+            The Go module system simply forbids circular dependencies.
+          </p>
+          <p class="fragment">
+            That's one solution.
+          </p>
+          <p class="fragment">
+            If you don't like it, don't use Go.
+          </p>
+        </section>
+
+        <section>
+          <h2>
+            But the ECMAScript 2015 module system was designed with all
+            the strengths and weaknesses of CommonJS in mind!
+          </h2>
+          <br>
+          <p class="fragment">
+            Thanks to the hard work and cleverness of people like
+            <a target="_blank"
+               href="https://twitter.com/littlecalculist">Dave Herman</a>,
+            <span class="javascript">ES2015 modules solve or at least
+            mitigate all the problems I mentioned earlier.
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p class="fragment">
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="fragment javascript block small">
+// What's the difference?
+let {readFile, writeFile} = require("fs");
+import {readFile, writeFile} from "fs";
+
+
+
+
+
+
+</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// What's the difference?
+let {readFile, writeFile} = require("fs");
+import {readFile, writeFile} from "fs";
+
+export function ensureTrailingNewline(path, callback) {
+  readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The destructuring version:
+let {readFile, writeFile} = require("fs");
+
+
+export function ensureTrailingNewline(path, callback) {
+  readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The destructuring version:
+let readFile = require("fs").readFile;
+let writeFile = require("fs").writeFile;
+
+export function ensureTrailingNewline(path, callback) {
+  readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// This has all the problems as our earlier example!
+let readFile = require("fs").readFile;
+let writeFile = require("fs").writeFile;
+
+export function ensureTrailingNewline(path, callback) {
+  readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// This has all the problems as our earlier example!
+let foo = require("a").foo;
+
+
+export function ensureTrailingNewline(path, callback) {
+  readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The ES2015 version:
+import {readFile, writeFile} from "fs";
+
+
+export function ensureTrailingNewline(path, callback) {
+  readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The ES2015 version:
+const _fs = require("fs");
+
+
+export function ensureTrailingNewline(path, callback) {
+  readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The ES2015 version:
+const _fs = require("fs");
+
+
+export function ensureTrailingNewline(path, callback) {
+  _fs.readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The ES2015 version:
+const _fs = require("fs");
+
+export function ensureTrailingNewline(path, callback) {
+  _fs.readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The ES2015 version:
+const _fs = require("fs");
+
+export function ensureTrailingNewline(path, callback) {
+  _fs.readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}</code></div>
+          <p class="fragment">
+            <a target="_blank"
+               href="https://www.npmjs.com/package/graceful-fs">Popular</a>
+            package for which this matters:
+            <a target="_blank"
+               class="fragment"
+               href="https://github.com/isaacs/node-graceful-fs/blob/4f6a7e8a01/README.md#global-patching"><code>graceful-fs</code></a>
+          </p>
+        </section>
+
+        <section>
+          Example: Babel transpilation
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p class="fragment">
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript fragment block small">
+// In abc.js:
+export default function a() {...}
+
+
+
+
+
+
+
+
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+
+
+
+// In d.js:
+import a from "./abc";
+
+
+
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+
+
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+
+
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+export function b() {...}
+
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+
+
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+export function b() {...}
+export const c = 299792458;
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+
+
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+export function b() {...}
+export const c = 299792458;
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+import {b, c} from "./abc";
+
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+export function b() {...}
+export const c = 299792458;
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+import {b, c} from "./abc";
+import {b as bee, c as lightSpeed} from "./abc";
+
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+export function b() {...}
+export const c = 299792458;
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+import {b, c} from "./abc";
+import {b as bee, c as lightSpeed} from "./abc";
+import {default as a2} from "./abc";
+
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+export function b() {...}
+export const c = 299792458;
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+import {b, c} from "./abc";
+import {b as bee, c as lightSpeed} from "./abc";
+import {default as a2} from "./abc";
+import {default as a3, b, c} from "./abc";
+
+            </code>
+          </div>
+        </section>
+
+        <section>
+          <h2>
+            What about <code class="javascript">module.exports</code>?
+          </h2>
+          <br>
+          <p>
+            ES2015 modules can define
+            a <code class="javascript">default</code> exported value:
+          </p>
+          <div class="align-left">
+            <code class="javascript block small">
+// In abc.js:
+export default function a() {...}
+export function b() {...}
+export const c = 299792458;
+
+// In d.js:
+import a from "./abc";
+import a1 from "./abc";
+import {b, c} from "./abc";
+import {b as bee, c as lightSpeed} from "./abc";
+import {default as a2} from "./abc";
+import {default as a3, b, c} from "./abc";
+import a3, {b, c} from "./abc";
+            </code>
+          </div>
+        </section>
+
+        <section>
+          Example: Babel transpilation
+        </section>
+
+        <!--<section>
+          <h1>Different kinds of determinism</h1>
+          <ol>
+            <li class="fragment">
+              Everything affects everything else all the time! Science is
+              impossible!
+            </li>
+            <li class="fragment">
+              Experiments are repeatable but effectively
+              unpredictable. Science is possible. You can seed the random
+              number generator.
+            </li>
+            <li class="fragment">
+              The rules are known, but their interplay is erratic
+            </li>
+            <li class="fragment">
+              Predictable and <em>modular</em>
+            </li>
+            <li class="fragment">
+              Completely static
+            </li>
+          </ol>
+        </section>-->
+
+        <section>
+          Can ECMAScript 2015 modules solve these problems?
+          <p class="fragment">
+            Why yes! And how!
+          </p>
+        </section>
+
+        <section>
+          All the other module formats are just trying to get CommonJS to
+          work in the browser. None of them claim to solve any of these
+          problems. It's no longer an arbitrary choice between equivalent
+          alternatives. The contest is over. A thousand flowers bloomed
+          and then died, and with good reason.
+        </section>
+
+        <section>
+          Why not just <code>require</code> + destructuring?
+        </section>
+
+        <section>
+          How exciting could <code class="javascript">import</code>
+          and <code class="javascript">export</code> be if they can just
+          be compiled to <code class="javascript">require</code>
+          and <code class="javascript">exports</code>?
+        </section>
+
+        <section>
+          Live binding
+          <p class="fragment">
+            A form of late binding.
+          </p>
+        </section>
+
+        <section>
+          All possible because <code class="javascript">import</code>
+          doesn't have to be explained in terms of idiomatic JavaScript
+        </section>
+
+        <section>
+          Default and named exports, together at last!
+        </section>
+
+        <section>
+          Statically analyzable by design
+          <p class="fragment">
+            The source expression is always a string literal.
+          </p>
+        </section>
+
+        <section>
+          Rollup
+        </section>
+
+        <section>
+          How to use ES2015 modules today
+        </section>
+
+        <section>
+          <h2>App skeleton</h2>
+          <code class="block small">
+git clone https://github.com/benjamn/jsnext-skeleton.git
+npm install jsnext-skeleton
+          </code>
+        </section>
+
+        <section>
+          But ES2015 is only part of the solution!
+          <p class="fragment">
+            Module definition formats!
+          </p>
+        </section>
+
+        <section>
+          <h2>Emo Hellscape</h2>
+          <a href="https://medium.com/@trek/last-week-i-had-a-small-meltdown-on-twitter-about-npms-future-plans-around-front-end-packaging-b424dd8d367a"
+             target="_blank" class="fragment">article</a>
+        </section>
+
+        <section>
+          To ship bundles, or not to ship bundles.
+        </section>
+
+        <section>
+          Bundles need to be created at publishing time, or else errors in
+          bundle creation will be presented to the consumer.
+        </section>
+
+        <section>
+          Publish your ES6 source modules to NPM, un-transpiled!
+          <p class="fragment">
+            Don't put <code>src/</code> in your <code>.npmignore</code> file!
+          </p>
+          <p class="fragment">
+            Don't use a funny file extension. ES6 is JavaScript!
+          </p>
+          <p class="fragment">
+            So that those of us who care can consume your code in whatever
+            way we choose.
+          </p>
+        </section>
+
         <section data-background="img/wires.jpg">
           <h1 class="thanks">Thanks!</h1>
         </section>
