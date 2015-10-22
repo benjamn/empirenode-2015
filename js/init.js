@@ -1,8 +1,29 @@
 Reveal.addEventListener("ready", function() {
-  var codes = document.querySelectorAll("code.javascript");
-  Array.prototype.forEach.call(codes, function (block) {
+  var Ap = Array.prototype;
+  var each = Ap.forEach;
+  var slice = Ap.slice;
+
+  var codes = document.querySelectorAll("code.javascript,code.xml");
+  each.call(codes, function (block) {
+    console.log(block);
     hljs.highlightBlock(block);
   });
+
+  var blinkers = slice.call(document.querySelectorAll(".blink"));
+  if (blinkers.length > 0) {
+    var visible = true;
+    function setVisibility(blinker) {
+      blinker.style.visibility = visible ? "visible" : "hidden";
+    }
+
+    function go() {
+      blinkers.forEach(setVisibility);
+      setTimeout(go, visible ? 1000 : 500);
+      visible = ! visible;
+    }
+
+    go();
+  }
 });
 
 // Full list of configuration options available at:
