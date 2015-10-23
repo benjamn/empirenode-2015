@@ -112,7 +112,7 @@ img.interstitial {
 .reveal section .thanks {
   color: white;
   position: absolute;
-  left: 0;
+  right: 0;
   top: 300px;
 }
 
