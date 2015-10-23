@@ -258,35 +258,657 @@ export * from
           </p>
         </section>
 
-        <section>
+        <section class="full_height">
           <h2>Problem 2: <span class="fragment">Dependency cycles</span></h2>
+          <br>
+          <code class="javascript fragment block small left">// wrap.js
+var log = require("./log").log;
+
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript fragment block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+
+
+
+
+
+          </code>
+          <div style="clear:both">&nbsp;</div>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+var log = require("./log").log;
+
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p class="fragment">
+            What's wrong here?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+var log = require("./log").log;
+
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Can we fix it?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+
+
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Can we fix it?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Can we fix it?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Can we fix it?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Can we fix it?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Why does this work?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+
+// main.js
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Will it always work?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+
+// main.js
+
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Will it always work?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+
+// main.js
+
+
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Will it always work?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+// main.js
+
+
+
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Will it always work?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+// main.js
+var log = require("./log");
+
+
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Will it always work?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+// main.js
+var log = require("./log");
+log("STARTING SERVER");
+
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            Will it always work?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+// main.js
+var log = require("./log");
+log("STARTING SERVER");
+
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            What about now?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
+          <br>
+          <code class="javascript block small left">// wrap.js
+exports.deferred = function (fn) {
+  return function wrapper() {
+    setTimeout(fn, 0);
+  };
+};
+
+var log = require("./log").log;
+
+exports.logged = function (fn) {
+  return function wrapper(...args) {
+    log("calling the function");
+    return fn.apply(this, args);
+  };
+};</code>
+          <code class="javascript block small right">// log.js
+var wrap = require("./wrap");
+
+exports.log = wrap.deferred(
+  function (...messages) {...}
+);
+
+// main.js
+var log = require("./log");
+log("STARTING SERVER");
+
+var wrap = require("./wrap");
+require("http").createServer(
+  wrap.logged((req, res) => {...})
+).listen(8080);</code>
+          <div style="clear:both">&nbsp;</div>
+          <p>
+            What happens when the first request comes in?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>Problem 2: Dependency cycles</h2>
           <br>
           <ul>
             <li class="fragment">
               Not forbidden!
             </li>
             <li class="fragment">
-              Relatively simple
+              Relatively simple, deterministic
               <a href="https://nodejs.org/api/modules.html#modules_cycles"
                  target="_blank">resolution policy</a>.
             </li>
             <li class="fragment">
-              Extremely brittle, especially in large codebases.
+              Highly sensitive to load order, <span class="fragment">which
+              is beyond the control of the modules participating in the
+              cycle.</span>
             </li>
             <li class="fragment">
-              Parable: <a href="https://github.com/facebook/react/commit/2ee66262db9fb91b0d0e9d64cefeb223074f8e05?diff=split"
-                          target="_blank"><code>ReactMount</code> + <code>ReactID</code></a>
+              <a href="https://github.com/facebook/react/commit/2ee66262db9fb91b0d0e9d64cefeb223074f8e05?diff=split"
+                 target="_blank">Example</a> from the React codebase where
+              we gave up on modularity in the name of preventing cycles.
             </li>
             <li class="fragment">
-              Lesson: you might think you can simply forbid cycles, but
-              modularity will suffer.
+              Cycles can be useful.
+            </li>
+            <li class="fragment">
+              Cycles should work.
             </li>
           </ul>
-        </section>
-
-        <section>
-          <h2>Example: load order brittleness</h2>
-          <!-- TODO -->
         </section>
 
         <section>
@@ -685,7 +1307,7 @@ export function ensureTrailingNewline(path, callback) {
           <p class="fragment">
             <a target="_blank"
                href="https://www.npmjs.com/package/graceful-fs">Popular</a>
-            package for which this matters:
+            package where this matters:
             <a target="_blank"
                class="fragment"
                href="https://github.com/isaacs/node-graceful-fs/blob/4f6a7e8a01/README.md#global-patching"><code>graceful-fs</code></a>
@@ -1012,7 +1634,7 @@ import a4, {b, c} from "./abc";
             appear only at the top level of a
             module, <span class="fragment">and must have one of the
             following forms</span><span class="fragment">&mdash;all of
-            which have names:</span>
+            which have <strong>names</strong>:</span>
           </p>
           <ul>
             <li class="fragment">
@@ -1050,8 +1672,8 @@ import a4, {b, c} from "./abc";
             itself.
           </p>
           <p class="fragment">
-            In fact, there's no reason an implementation of ES2015 modules
-            needs to represent exports using an object.
+            In fact, native implementations of ES2015 modules need not
+            use objects to represent exports at all!
           </p>
           <p class="fragment">
             That's just an implementation detail that happens to be
@@ -1115,7 +1737,7 @@ cd jsnext-skeleton
 npm install
 npm test</code>
           <p class="fragment">
-            Try it, break it, republish it, submit pull requests!
+            Try it, break it, republish it as your own, submit issues!
           </p>
         </section>
 
@@ -1178,7 +1800,7 @@ npm test</code>
         </section>
 
         <section>
-          <h2>Here's where I brag about Meteor</h2>
+          <h2>The part of the talk where I sing the praises of Meteor</h2>
           <p class="fragment">
             Meteor's build system takes care of pretty much every aspect
             of bundling for you. <span class="fragment">Only binary
@@ -1203,7 +1825,7 @@ npm test</code>
         </section>
 
         <section>
-          <h2>My feeble pleas:</h2>
+          <h2>Feeble pleas:</h2>
           <br>
           <ul>
             <li class="fragment">
@@ -1217,8 +1839,8 @@ npm test</code>
             </li>
             <li class="fragment">
               Publish your source files to NPM, in addition to your
-              CommonJS files, so that sophisticated tools can make use of
-              them.
+              CommonJS files, so that sophisticated tools can begin making
+              use of them.
             </li>
             <li class="fragment">
               Add a
