@@ -1305,8 +1305,35 @@ export function ensureTrailingNewline(path, callback) {
     if (err) callback(err);
     else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
-}</code></div>
+}
+          </code></div>
           <p class="fragment">
+            With ES2015, <span class="fragment"><code>ensureTrailingNewline</code>
+            always uses the latest version of <code>readFile</code>
+            and <code>writeFile</code>.</span>
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <br>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
+// The ES2015 version:
+const _fs = require("fs");
+
+export function ensureTrailingNewline(path, callback) {
+  _fs.readFile(path, "utf8", (err, text) => {
+    if (err) callback(err);
+    else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
+  });
+}
+          </code></div>
+          <p>
             <a target="_blank"
                href="https://www.npmjs.com/package/graceful-fs">Popular</a>
             package where this matters:
@@ -1827,7 +1854,7 @@ npm test</code>
         </section>
 
         <section>
-          <h2>Feeble pleas:</h2>
+          <h2>My pleas:</h2>
           <br>
           <ul>
             <li class="fragment">
