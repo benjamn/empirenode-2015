@@ -1238,8 +1238,8 @@ export function ensureTrailingNewline(path, callback) {
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
+// Remember this hazard?
 let foo = require("a").foo;
-
 
 export function ensureTrailingNewline(path, callback) {
   readFile(path, "utf8", (err, text) => {
