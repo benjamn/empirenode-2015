@@ -94,7 +94,7 @@ section.external_iframe {
 .external_iframe iframe {
   width: 100%;
   height: 90%;
-  margin: 50px 0 0 0;
+  margin: 10px 0 0 0;
 }
 
 .reveal section table {
