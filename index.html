@@ -1194,8 +1194,8 @@ export function ensureTrailingNewline(path, callback) {
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-let readFile = require("fs").readFile;
-let writeFile = require("fs").writeFile;
+const _fs = require("fs");
+let readFile = _fs.readFile, writeFile = _fs.writeFile;
 
 export function ensureTrailingNewline(path, callback) {
   readFile(path, "utf8", (err, text) => {
@@ -1216,8 +1216,8 @@ export function ensureTrailingNewline(path, callback) {
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-let readFile = require("fs").readFile;
-let writeFile = require("fs").writeFile;
+const _fs = require("fs");
+let readFile = _fs.readFile, writeFile = _fs.writeFile;
 
 export function ensureTrailingNewline(path, callback) {
   readFile(path, "utf8", (err, text) => {
