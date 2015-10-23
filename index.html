@@ -1101,16 +1101,15 @@ exports.bad = function (arg) {
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p class="fragment">
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="fragment javascript block small">
-// What's the difference?
 let {readFile, writeFile} = require("fs");
-import {readFile, writeFile} from "fs";
+
+
 
 
 
@@ -1122,14 +1121,35 @@ import {readFile, writeFile} from "fs";
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// What's the difference?
+let {readFile, writeFile} = require("fs");
+import {readFile, writeFile} from "fs";
+
+
+
+
+
+
+
+</code></div>
+          <p class="fragment">
+            What's the difference?
+          </p>
+        </section>
+
+        <section class="full_height">
+          <h2>So how does it work?</h2>
+          <p>
+            At first glance, the
+            ES2015 <code class="javascript">import</code> statement looks
+            pretty similar to a destructuring variable declaration:
+          </p>
+          <div class="align-left"><code class="javascript block small">
 let {readFile, writeFile} = require("fs");
 import {readFile, writeFile} from "fs";
 
@@ -1139,18 +1159,19 @@ export function ensureTrailingNewline(path, callback) {
     else writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            Consider this usage example.
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// The destructuring version:
 let {readFile, writeFile} = require("fs");
 
 
@@ -1160,18 +1181,19 @@ export function ensureTrailingNewline(path, callback) {
     else writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            What happens with the destructuring version?
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// The destructuring version:
 let readFile = require("fs").readFile;
 let writeFile = require("fs").writeFile;
 
@@ -1181,18 +1203,19 @@ export function ensureTrailingNewline(path, callback) {
     else writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            Imported properties are simply stored in variables.
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// This has all the problems as our earlier example!
 let readFile = require("fs").readFile;
 let writeFile = require("fs").writeFile;
 
@@ -1202,18 +1225,19 @@ export function ensureTrailingNewline(path, callback) {
     else writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            This has all the problems as our earlier example!
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// This has all the problems as our earlier example!
 let foo = require("a").foo;
 
 
@@ -1223,18 +1247,19 @@ export function ensureTrailingNewline(path, callback) {
     else writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            This has all the problems as our earlier example!
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// The ES2015 version:
 import {readFile, writeFile} from "fs";
 
 
@@ -1244,18 +1269,19 @@ export function ensureTrailingNewline(path, callback) {
     else writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            How about the ES2015 version?
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// The ES2015 version:
 const _fs = require("fs");
 
 
@@ -1265,18 +1291,19 @@ export function ensureTrailingNewline(path, callback) {
     else writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            Behind the scenes, a reference to the module is imported.
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// The ES2015 version:
 const _fs = require("fs");
 
 
@@ -1286,19 +1313,22 @@ export function ensureTrailingNewline(path, callback) {
     else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
+          <p>
+            References to the imports then get "rewritten" as if they were
+            member expressions.
+          </p>
         </section>
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// The ES2015 version:
 const _fs = require("fs");
+
 
 export function ensureTrailingNewline(path, callback) {
   _fs.readFile(path, "utf8", (err, text) => {
@@ -1316,15 +1346,14 @@ export function ensureTrailingNewline(path, callback) {
 
         <section class="full_height">
           <h2>So how does it work?</h2>
-          <br>
           <p>
             At first glance, the
             ES2015 <code class="javascript">import</code> statement looks
             pretty similar to a destructuring variable declaration:
           </p>
           <div class="align-left"><code class="javascript block small">
-// The ES2015 version:
 const _fs = require("fs");
+
 
 export function ensureTrailingNewline(path, callback) {
   _fs.readFile(path, "utf8", (err, text) => {
