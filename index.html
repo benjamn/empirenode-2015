@@ -59,19 +59,22 @@
 
         <section>
           <code class="javascript block medium">
-export {slides as default} from
-  "http://benjamn.github.io/empirenode-2015"
+export * from
+  <a href="http://benjamn.github.io/empirenode-2015">"http://benjamn.github.io/empirenode-2015"</a>
           </code>
         </section>
 
         <section>
           <h2>Let's talk about <code class="fragment javascript">eval</code></h2>
+          <br>
           <p class="fragment">
-            Its mere presence thwarts almost any kind of optimization or
-            static analysis.
+            The mere presence of <code class="javascript">eval</code> in a
+            function thwarts almost any kind of optimization or static
+            analysis.
           </p>
           <p class="fragment">
-            Most JavaScript programmers I know consider it more harmful
+            Most JavaScript programmers I know
+            consider <code class="javascript">eval</code> more harmful
             than <code>goto</code>.
           </p>
           <p class="fragment">
@@ -79,15 +82,10 @@ export {slides as default} from
             those strings!
           </p>
           <p class="fragment">
-            Transpilers like Babel take hardly any pains to support it.
+            There's no good way for transpilers to
+            support <code class="javascript">eval</code>, so they
+            basically don't even try.
           </p>
-        </section>
-
-        <section>
-          <h2>
-            Aside: <span class="fragment">how could
-              <code class="javascript">eval</code> support ES2015?</span>
-          </h2>
         </section>
 
         <section>
@@ -103,22 +101,30 @@ export {slides as default} from
         <section>
           <h2>
             And yet <span class="fragment">we
-            use <code class="javascript">eval</code> all the time!</span>
+            use <code class="javascript">eval</code> all the time.</span>
           </h2>
           <p class="fragment">
-            Of course it goes by different names:<br>
+            It hides behind many different abstractions:
+            <br>
             <ul>
               <li class="fragment">
-                <code class="xml">&lt;script src="http://..."&gt;&lt;/script&gt;</code><br>
+                <code class="xml">&lt;script src="http://..."&gt;&lt;/script&gt;</code>
               </li>
               <li class="fragment">
-                <code class="xml">&lt;script&gt;...&lt;/script&gt;</code><br>
+                <code class="xml">&lt;script&gt;...&lt;/script&gt;</code>
               </li>
               <li class="fragment">
-                <code>vm.runInThisContext("...")</code><br>
+                <code class="javascript">new Function("...")()</code>
               </li>
               <li class="fragment">
-                <code class="xml">&lt;a href="javascript:..."&gt;click me!&lt;/a&gt;</code><br>
+                <code class="javascript">require("vm").runInThisContext("...")</code>
+              </li>
+              <li class="fragment">
+                <code class="xml">&lt;a href="javascript:..."&gt;Click me!&lt;/a&gt;</code>
+              </li>
+              <li class="fragment">
+                <code class="xml">&lt;input type="button" value="No, me!"
+       onclick="..." /&gt;</code>
               </li>
               <li class="fragment">
                 <code class="javascript">setTimeout("...", 1000)</code>
@@ -218,14 +224,17 @@ export {slides as default} from
           <p class="fragment">
             Is "winning" really all we care about?
           </p>
+          <p class="fragment">
+            Can we do better?
+          </p>
         </section>
 
         <section>
           <h1>What's wrong with CommonJS?</h1>
         </section>
 
-        <section>
-          <h2>How code is loaded</h2>
+        <section class="full_height">
+          <h2>Problem 1: <span class="fragment">How code is loaded</a></h2>
           <br>
           <p class="fragment">
             Node has it easy. <span class="fragment">Just ask the file
@@ -241,7 +250,7 @@ export {slides as default} from
           </p>
           <br>
           <p class="fragment">
-            <em>* Bundling deserves a talk of its own.<br>
+            <em>* Bundling woes deserve a talk of their own.<br>
               <a href="https://medium.com/@trek/last-week-i-had-a-small-meltdown-on-twitter-about-npms-future-plans-around-front-end-packaging-b424dd8d367a"
                  target="_blank">Listen</a> to
               <a target="_blank" href="https://twitter.com/trek">Trek Glowacki</a>.
@@ -250,29 +259,42 @@ export {slides as default} from
         </section>
 
         <section>
-          <h2>Circular dependencies</h2>
+          <h2>Problem 2: <span class="fragment">Dependency cycles</span></h2>
+          <br>
+          <ul>
+            <li class="fragment">
+              Not forbidden!
+            </li>
+            <li class="fragment">
+              Relatively simple
+              <a href="https://nodejs.org/api/modules.html#modules_cycles"
+                 target="_blank">resolution policy</a>.
+            </li>
+            <li class="fragment">
+              Extremely brittle, especially in large codebases.
+            </li>
+            <li class="fragment">
+              Parable: <a href="https://github.com/facebook/react/commit/2ee66262db9fb91b0d0e9d64cefeb223074f8e05?diff=split"
+                          target="_blank"><code>ReactMount</code> + <code>ReactID</code></a>
+            </li>
+            <li class="fragment">
+              Lesson: you might think you can simply forbid cycles, but
+              modularity will suffer.
+            </li>
+          </ul>
         </section>
 
         <section>
           <h2>Example: load order brittleness</h2>
-        </section>
-
-        <section>
-          <h2>Parable: <code>ReactID</code> + <code>ReactMount</code></h2>
-          <p class="fragment">
-            You might think you can just forbid circular dependencies...
-          </p>
-          <a href="https://github.com/facebook/react/commit/2ee66262db9fb91b0d0e9d64cefeb223074f8e05?diff=split"
-             class="fragment" target="_blank">commit</a>
-          <p class="fragment">
-            Sacrificing modularity in order to tame the circular hydra
-          </p>
+          <!-- TODO -->
         </section>
 
         <section>
           <h2>
-            <code class="javascript">exports</code> vs.
-            <code class="javascript">module.exports</code>
+            Problem 3: <span class="fragment">
+              <code class="javascript">exports</code> vs.
+              <code class="javascript">module.exports</code>
+            </span>
           </h2>
           <p class="fragment">
             Immediately returning a partially populated
@@ -286,8 +308,8 @@ export {slides as default} from
             <code class="javascript">exports</code> by reassigning
             the <code class="javascript">module.exports</code> property,
             <span class="fragment">rendering that partial
-            <code class="javascript">exports</code> object not only
-            incomplete but also totally irrelevant.</span>
+            <code class="javascript">exports</code> object totally
+            irrelevant.</span>
           </p>
           <p class="fragment">
             Different modules that <code>require</code> the same module
@@ -296,15 +318,16 @@ export {slides as default} from
         </section>
 
         <section>
-          <h2>Multiple exports</h2>
+          <h2>Problem 4: <span class="fragment">Multiple exports</span></h2>
           <br>
           <p class="fragment">
-            It's nice that <code class="javascript">exports</code> objects
-            can have multiple properties.
+            It's definitely nice
+            that <code class="javascript">exports</code> objects can have
+            multiple properties.
           </p>
           <p class="fragment">
             But it's nearly impossible to determine whether a certain
-            property is never actually used.
+            property is actually used.
           </p>
           <p class="fragment">
             Not a huge problem on the server, but client bundlers like
@@ -349,18 +372,19 @@ exports.bad = function (arg) {
         </section>
 
         <section>
-          <p>
-            CommonJS may be the most popular module system for
-            JavaScript, <span class="fragment">but it's a shame that we're
-            even talking about one module system winning a popularity
-            contest.</span>
+          <h2>
+            CommonJS may be the most popular module system we have
+          </h2>
+          <br>
+          <p class="fragment">
+            But it's a shame that we're even talking about one module
+            system winning a popularity contest.
           </p>
           <br>
           <p class="fragment">
-            Almost every other language avoids this contest entirely,
-            <span class="fragment">by providing <strong>a built-in module
-            system</strong>,</span> <span class="fragment"> and most of
-            them do it with a special syntax.</span>
+            Almost every other language avoids this contest entirely, by
+            providing <strong>a built-in module system</strong>, and most
+            of them do it with a special syntax.
           </p>
         </section>
 
@@ -399,12 +423,14 @@ exports.bad = function (arg) {
             which no one is ever quite sure how to share their code with the
             widest possible audience.
           </h3>
-          <br>
-          <p class="fragment">
+        </section>
+
+        <section>
+          <h3>
             Betting on the wrong best practice (CommonJS? AMD? UMD?) is a
             recipe for obscurity, while reverting to the simplest common
             denominator (global variables) feels like giving up.
-          </p>
+          </h3>
         </section>
 
         <section>
@@ -412,14 +438,15 @@ exports.bad = function (arg) {
             And that's why the new ECMAScript 2015
             <code class="javascript">import</code>
             and <code class="javascript">export</code> statements are so
-            important.
+            vitally important.
           </h2>
         </section>
 
         <section>
           <h2>
-            A native module system would be a huge relief even if it had
-            fewer features than CommonJS
+            A native module system would be a huge
+            relief <span class="fragment">even if it was more restrictive
+            than CommonJS!</span>
           </h2>
           <br>
           <p class="fragment">
@@ -434,17 +461,17 @@ exports.bad = function (arg) {
         </section>
 
         <section>
-          <h2>
-            But the ECMAScript 2015 module system was designed with all
-            the strengths and weaknesses of CommonJS in mind!
-          </h2>
+          <h3>
+            But in fact the ES2015 module system was designed with all the
+            strengths and weaknesses of CommonJS in mind
+          </h3>
           <br>
           <p class="fragment">
             Thanks to the hard work and cleverness of people like
             <a target="_blank"
                href="https://twitter.com/littlecalculist">Dave Herman</a>,
             <span class="javascript">ES2015 modules solve or at least
-            mitigate all the problems I mentioned earlier.
+            mitigate all four of the problems I mentioned earlier.
           </p>
         </section>
 
@@ -655,26 +682,6 @@ export function ensureTrailingNewline(path, callback) {
     else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
   });
 }</code></div>
-        </section>
-
-        <section class="full_height">
-          <h2>So how does it work?</h2>
-          <br>
-          <p>
-            At first glance, the
-            ES2015 <code class="javascript">import</code> statement looks
-            pretty similar to a destructuring variable declaration:
-          </p>
-          <div class="align-left"><code class="javascript block small">
-// The ES2015 version:
-const _fs = require("fs");
-
-export function ensureTrailingNewline(path, callback) {
-  _fs.readFile(path, "utf8", (err, text) => {
-    if (err) callback(err);
-    else _fs.writeFile(path, text.replace(/\n*$/, "\n"), callback);
-  });
-}</code></div>
           <p class="fragment">
             <a target="_blank"
                href="https://www.npmjs.com/package/graceful-fs">Popular</a>
@@ -683,10 +690,6 @@ export function ensureTrailingNewline(path, callback) {
                class="fragment"
                href="https://github.com/isaacs/node-graceful-fs/blob/4f6a7e8a01/README.md#global-patching"><code>graceful-fs</code></a>
           </p>
-        </section>
-
-        <section>
-          Example: Babel transpilation
         </section>
 
         <section class="full_height">
@@ -990,14 +993,11 @@ import a4, {b, c} from "./abc";
         </section>
 
         <section>
-          Example: Babel transpilation
-        </section>
-
-        <section>
-          <h2>
-            The ES2015 module system enforces the very discipline I
-            described earlier, <span class="fragment">which means it
-            doesn't have to be <em>self</em>-discipline.</span>
+          <h3>
+            You might even say <span class="fragment">the ES2015 module
+            system enforces the discipline I outlined
+            earlier...</span> <span class="fragment">which means it doesn't
+            have to be <em>self</em>-discipline.</span>
           </h2>
           <br>
           <p class="fragment">
@@ -1012,7 +1012,7 @@ import a4, {b, c} from "./abc";
             appear only at the top level of a
             module, <span class="fragment">and must have one of the
             following forms</span><span class="fragment">&mdash;all of
-            which include a name:</span>
+            which have names:</span>
           </p>
           <ul>
             <li class="fragment">
@@ -1090,10 +1090,18 @@ import a4, {b, c} from "./abc";
           <iframe class="fragment"src="http://rollupjs.org"></iframe>
         </section>
 
+        <section>
+          <h2>
+            But enough about the future.
+          </h2>
+        </section>
+
         <section class="full_height">
-          <h2>Using ES2015 modules in Node projects today</h2>
+          <h2>How can you use ES2015 modules today?</h2>
           <p class="fragment">
-            I would love to tell you, "Just use Meteor!"
+            I would love to tell you, "Just use
+            Meteor!" <span class="fragment">And that will soon be the
+            case.</span>
           </p>
           <p class="fragment">
             Until Meteor 1.3 is released, I've put together
@@ -1107,13 +1115,12 @@ cd jsnext-skeleton
 npm install
 npm test</code>
           <p class="fragment">
-            Install it, put some real code into it, break it, republish
-            it as your own, submit issues and pull requests!
+            Try it, break it, republish it, submit pull requests!
           </p>
         </section>
 
         <section class="full_height">
-          <h2>Using ES2015 modules in Node projects today</h2>
+          <h2>How can you use ES2015 modules today?</h2>
           <p class="fragment">
             Some stuff you can do with this skeleton package:
           </p>
@@ -1141,7 +1148,7 @@ npm test</code>
 
         <section>
           <h3>
-            So now you're publishing both ES2015 and CommonJS to NPM,
+            Soon you'll be publishing both ES2015 and CommonJS to NPM,
             <span class="fragment">but what use are either of those formats
             to folks who really just want a <code>.js</code> file they can
             load with a
@@ -1196,7 +1203,7 @@ npm test</code>
         </section>
 
         <section>
-          <h2>My pleas:</h2>
+          <h2>My feeble pleas:</h2>
           <br>
           <ul>
             <li class="fragment">
