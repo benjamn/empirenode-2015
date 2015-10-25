@@ -5,7 +5,6 @@ Reveal.addEventListener("ready", function() {
 
   var codes = document.querySelectorAll("code.javascript,code.xml");
   each.call(codes, function (block) {
-    console.log(block);
     hljs.highlightBlock(block);
   });
 
